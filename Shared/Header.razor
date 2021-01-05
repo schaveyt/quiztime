@@ -1,0 +1,12 @@
+<div class="bg-green-500 text-white py-3 flex @CustomClass">
+    @ChildContent
+</div>
+
+@code
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string CustomClass {get; set;}
+}

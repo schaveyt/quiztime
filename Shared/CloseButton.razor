@@ -1,0 +1,16 @@
+<div class="text-white cursor-pointer opacity-70 hover:opacity-100" @onclick="OnClickHandler">
+    <svg class="w-8 h-8 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+</div>
+
+@code
+{
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task OnClickHandler()
+    {
+        await OnClick.InvokeAsync();
+    }
+}

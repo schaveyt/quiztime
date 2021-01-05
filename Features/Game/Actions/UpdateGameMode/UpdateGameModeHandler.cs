@@ -1,0 +1,26 @@
+using System.Threading;
+using System.Threading.Tasks;
+using BlazorState;
+using MediatR;
+
+namespace QuizTime.Features.Game
+{
+    public partial class GameState
+    {
+        public class UpdateGameModeHandler : ActionHandler<UpdateGameModeAction>
+        {
+            public UpdateGameModeHandler(IStore aStore): base(aStore)
+            {
+
+            }
+
+            GameState State => Store.GetState<GameState>();
+
+            public override Task<Unit> Handle(UpdateGameModeAction aAction, CancellationToken aCancellationToken)
+            {
+                State.Mode = aAction.Value;
+                return Unit.Task;
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+﻿@page "/"
+@using BlazorState
+@inherits BlazorStateComponent
+@using QuizTime.Features.Game
+@using QuizTime.Features.Start
+@using QuizTime.Features.Play
+
+@switch (State.Mode)
+{
+    case GameMode.Start:
+        <Start/>
+        break;
+    case GameMode.Play:
+        <Play/>
+        break;
+    default:
+        <Start/>
+        break;
+}
+
+@code
+{
+    private GameState State => GetState<GameState>();
+    
+}

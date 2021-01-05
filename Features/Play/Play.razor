@@ -1,0 +1,29 @@
+@using QuizTime.Features.Game
+@using BlazorState
+@inherits BlazorStateComponent
+
+<Header CustomClass="flex flex-col">
+    <div class="flex flex-row justify-between items-center px-3">
+        <div class="w-8"></div>
+        <div class="">
+            <h1 class="font-sans text-4xl">Quiz Time!</h1>
+        </div>
+        <CloseButton OnClick="OnClickClose" />
+    </div>
+</Header>
+
+<ContentArea CustomClass="flex flex-row justify-center items-center">
+    <span class="text-center text-4xl">Hi!</span>
+</ContentArea>
+
+<Footer />
+
+@code
+{
+    private GameState GameState => GetState<GameState>();
+
+    private void OnClickClose()
+    {
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
+    }
+}
