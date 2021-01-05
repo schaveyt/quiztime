@@ -1,9 +1,14 @@
-<div class="flex-grow text-green-600 @CustomClass">
+@using QuizTime.Features.Settings
+@inherits BlazorStateComponent
+
+<div class="flex-grow text-@(SettingsState.ThemeColorString)-600 @CustomClass">
     @ChildContent
 </div>
 
 @code
 {
+    private SettingsState SettingsState => GetState<SettingsState>();
+        
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 

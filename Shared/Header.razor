@@ -1,9 +1,13 @@
-<div class="bg-green-500 text-white py-3 flex @CustomClass">
+@using QuizTime.Features.Settings
+@inherits BlazorStateComponent
+<div class="bg-@(SettingsState.ThemeColorString)-500 text-white py-3 flex @CustomClass">
     @ChildContent
 </div>
 
 @code
 {
+    private SettingsState SettingsState => GetState<SettingsState>();
+        
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
