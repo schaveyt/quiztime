@@ -1,12 +1,11 @@
 ﻿@page "/"
-@using BlazorState
-@inherits BlazorStateComponent
+@inherits SettingsStateComponentBase
 @using QuizTime.Features.Settings
 @using QuizTime.Features.Game
 @using QuizTime.Features.Start
 @using QuizTime.Features.Play
 
-<div class="min-h-screen flex flex-col bg-@(SettingsState.ThemeColorString)-100">
+<QuizTimePage>
 
     @switch (State.Mode)
     {
@@ -21,12 +20,10 @@
             break;
     }
 
-</div>
+</QuizTimePage>
 
 @code
 {
-    private SettingsState SettingsState => GetState<SettingsState>();
-
     private GameState State => GetState<GameState>();
 
 }

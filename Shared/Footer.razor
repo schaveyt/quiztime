@@ -1,5 +1,5 @@
 @using QuizTime.Features.Settings
-@inherits BlazorStateComponent
+@inherits SettingsStateComponentBase
 
 <div id="footer" class="bg-@(SettingsState.ThemeColorString)-700 py-2 px-3 text-white text-xs text-center">
     <div class="flex flex-row justify-between">
@@ -32,8 +32,6 @@
 
 @code
 {
-    private SettingsState SettingsState => GetState<SettingsState>();
-
     private void OnThemeColorChanged(ThemeColor color)
     {
         Mediator.Send(new SettingsState.UpdateThemColorAction { Value = color });
