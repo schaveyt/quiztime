@@ -1,5 +1,6 @@
 
 @using QuizTime.Features.Game
+@using QuizTime.Features.Settings
 @inherits SettingsStateComponentBase
 
 <Header CustomClass="flex flex-col">
@@ -12,8 +13,23 @@
     </div>
 </Header>
 
-<ContentArea CustomClass="flex flex-row justify-center items-center">
-    <span class="text-center text-4xl">Hi!</span>
+<ContentArea CustomClass="flex flex-row justify-center">
+    <div class="flex flex-col pt-3 pb-5 space-y-3">
+        <div class="flex-auto text-4xl px-6 flex flex-col justify-center">
+            <p>Which of these is not an ocean?</p>
+            <ol class="pt-8">
+                <li>a) Pacific</li>
+                <li>b) Atlantic</li>
+                <li>c) Oceantic</li>
+                <li>d) Indian</li>
+            </ol>
+        </div>
+        <div class="flex flex-row justify-around items-center text-2xl">
+            <button class="py-4 px-8 rounded-lg bg-@(SettingsState.ThemeColorString)-600 text-@(SettingsState.ThemeColorString)-100 hover:bg-@(SettingsState.ThemeColorString)-400">Skip</button>
+            <button class="py-4 px-8 rounded-lg bg-@(SettingsState.ThemeColorString)-600 text-@(SettingsState.ThemeColorString)-100 hover:bg-@(SettingsState.ThemeColorString)-400">Know It?</button>
+        </div>
+        
+    </div>
 </ContentArea>
 
 <Footer />
