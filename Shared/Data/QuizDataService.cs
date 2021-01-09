@@ -29,6 +29,26 @@ namespace QuizTime.Shared.Data
                 },
                 answerIndex: 0
             ),
+            new BooleanQuizItem
+            (
+                question: "The largest U.S. state is Michigan.",
+                answer: false
+            ),
+            new BooleanQuizItem
+            (
+                question: "The largest U.S. state is Alaska.",
+                answer: true
+            ),
+            new BooleanQuizItem
+            (
+                question: "The Michigan state bird is the robin.",
+                answer: true
+            ),
+            new BooleanQuizItem
+            (
+                question: "Florida is full of crazy people.",
+                answer: true
+            ),
         };
 
         public IQuizItem GetNextQuizItem(int minSkillLevel, int maxSkillLevel)

@@ -27,7 +27,7 @@ namespace QuizTime.Shared.Data
             _answerIndex = answerIndex;
         }
 
-        public QuestionTypeEnum QuestionType => QuestionTypeEnum.MultipleChoice;
+        public virtual QuestionTypeEnum QuestionType => QuestionTypeEnum.MultipleChoice;
 
         public string[] Question
         {
@@ -46,6 +46,17 @@ namespace QuizTime.Shared.Data
         public int AnswerIndex => _answerIndex;
 
         public string AnswerString => "";
+
+    }
+
+    public class BooleanQuizItem : MultipleChoiceQuizItem
+    {
+        public BooleanQuizItem(string question, bool answer)
+            : base(question, new string[]{ "True", "False"}, answer ? 0 : 1)
+        {
+        }
+
+        public override QuestionTypeEnum QuestionType => QuestionTypeEnum.Boolean;
 
     }
 }

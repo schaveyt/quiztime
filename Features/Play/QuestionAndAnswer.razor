@@ -31,7 +31,7 @@
                 break;
 
             case QuestionTypeEnum.Boolean:
-                <strong>True or False - </strong>
+                <strong>True or False?</strong>
                 <p>@QuizItem.Question[0]</p>
                 break;
 
@@ -88,7 +88,7 @@
         }
         else
         {
-            <button class="p-3 bg-@(SettingsState.ThemeColorString)-600 flex items-center justify-center rounded-lg text-white">
+            <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? SettingsState.TrinaryColorString : SettingsState.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -104,13 +104,6 @@
             </button>
         }
     </div>
-    
-    
-    @* <div class="flex flex-row justify-around items-center">
-        <span>ShowAnswer: @ShowAnswer.ToString().ToLower()</span>
-        <span>UserAnswerIndex: @UserAnswerIndex.ToString()</span>
-        <span>QuizAnswerIndex: @QuizItem.AnswerIndex.ToString()</span>
-    </div> *@
 
 </div>
 
@@ -121,8 +114,6 @@
     private bool ShowAnswer {get; set;}
     private int UserAnswerIndex {get; set;}
 
-    private string ResponseTitle {get; set;}
-
     [Inject]
     protected QuizDataService DataService { get; set; }
 
@@ -130,7 +121,6 @@
     {
         QuizItem = DataService.GetNextQuizItem(0, 10);
         ShowAnswer = false;
-        ResponseTitle = string.Empty;
         base.OnInitialized();
     }
 
@@ -145,6 +135,16 @@
     {
         UserAnswerIndex = answerIndex;
         ShowAnswer = true;
+        LoadNextQuestionAsync();
+        StateHasChanged();
+    }
+
+    public async void LoadNextQuestionAsync()
+    {
+        await Task.Delay(3000);
+        ShowAnswer = false;
+        UserAnswerIndex = -1;
+        QuizItem = DataService.GetNextQuizItem(0, 10);
         StateHasChanged();
     }
 
@@ -152,7 +152,9 @@
     {   
         if(ShowAnswer)
         {
-            return index == QuizItem.AnswerIndex ? $"animate-pulse text-{SettingsState.TrinaryColorString}-600" : "text-{SettingsState.ThemeColorString}-100";
+            return index == QuizItem.AnswerIndex ? 
+                $"animate-pulse text-{SettingsState.TrinaryColorString}-600" : 
+                "text-{SettingsState.ThemeColorString}-100";
         }
         return null;        
     }
