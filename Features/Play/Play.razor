@@ -1,35 +1,22 @@
-
 @using QuizTime.Features.Game
 @using QuizTime.Features.Settings
+@using QuizTime.Shared.UI.Element
+@using QuizTime.Shared.UI.Composite
+@using Shared.Data
 @inherits SettingsStateComponentBase
 
 <Header CustomClass="flex flex-col">
     <div class="flex flex-row justify-between items-center px-3">
         <div class="w-8"></div>
         <div class="">
-            <h1 class="font-sans text-4xl">Quiz Time!</h1>
+            <h1 class="font-sans text-4xl">Question</h1>
         </div>
         <CloseButton OnClick="OnClickClose" />
     </div>
 </Header>
 
 <ContentArea CustomClass="flex flex-row justify-center">
-    <div class="flex flex-col pt-3 pb-5 space-y-3">
-        <div class="flex-auto text-4xl px-6 flex flex-col justify-center">
-            <p>Which of these is not an ocean?</p>
-            <ol class="pt-8">
-                <li>a) Pacific</li>
-                <li>b) Atlantic</li>
-                <li>c) Oceantic</li>
-                <li>d) Indian</li>
-            </ol>
-        </div>
-        <div class="flex flex-row justify-around items-center text-2xl">
-            <button class="py-4 px-8 rounded-lg bg-@(SettingsState.ThemeColorString)-600 text-@(SettingsState.ThemeColorString)-100 hover:bg-@(SettingsState.ThemeColorString)-400">Skip</button>
-            <button class="py-4 px-8 rounded-lg bg-@(SettingsState.ThemeColorString)-600 text-@(SettingsState.ThemeColorString)-100 hover:bg-@(SettingsState.ThemeColorString)-400">Know It?</button>
-        </div>
-        
-    </div>
+    <QuestionAndAnswer />
 </ContentArea>
 
 <Footer />
@@ -38,8 +25,12 @@
 {
     private GameState GameState => GetState<GameState>();
 
+    
+
     private void OnClickClose()
     {
         Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
     }
+
+    
 }

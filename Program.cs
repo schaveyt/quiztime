@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorState;
 using System.Reflection;
+using QuizTime.Shared.Data;
 
 namespace QuizTime
 {
@@ -20,6 +21,7 @@ namespace QuizTime
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton<QuizDataService, QuizDataService>();
 
             ConfigureServices(builder.Services);
             

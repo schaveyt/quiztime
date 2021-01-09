@@ -4,8 +4,9 @@
 @using QuizTime.Features.Game
 @using QuizTime.Features.Start
 @using QuizTime.Features.Play
+@using QuizTime.Shared.UI
 
-<QuizTimePage>
+<MainContainer>
 
     @switch (State.Mode)
     {
@@ -20,7 +21,7 @@
             break;
     }
 
-</QuizTimePage>
+</MainContainer>
 
 @code
 {

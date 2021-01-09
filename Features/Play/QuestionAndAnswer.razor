@@ -1,0 +1,117 @@
+@using QuizTime.Shared.UI.Element
+@using Shared.Data
+@using QuizTime.Features.Settings
+@inherits SettingsStateComponentBase
+
+<div class="flex flex-col pt-3 pb-5 space-y-3">
+    <div class="flex-auto text-4xl px-6 flex flex-col justify-center">
+        
+        @switch (QuizItem.QuestionType)
+        {
+            case QuestionTypeEnum.MultipleChoice:
+                <p>@QuizItem.Question[0]</p>
+                <ol class="pt-8">
+                    @if (QuizItem.Question.Length > 1)
+                    {
+                        <li>a) @QuizItem.Question[1]</li>
+                    }
+                    @if (QuizItem.Question.Length > 2)
+                    {
+                        <li>b) @QuizItem.Question[2]</li>
+                    }
+                    @if (QuizItem.Question.Length > 3)
+                    {
+                        <li>c) @QuizItem.Question[3]</li>
+                    }
+                    @if (QuizItem.Question.Length > 4)
+                    {
+                        <li>d) @QuizItem.Question[4]</li>
+                    }
+                </ol>
+                break;
+
+            case QuestionTypeEnum.Boolean:
+                <strong>True or False - </strong>
+                <p>@QuizItem.Question[0]</p>
+                break;
+
+            case QuestionTypeEnum.Verbal:
+                <p>@QuizItem.Question[0]</p>
+                break;
+            
+            default:
+                break;
+        }
+        
+        
+    </div>
+    <div class="flex flex-row justify-around items-center text-2xl">
+        <MainButton Text="Skip" OnClick="OnSkipHandler" Color="@(SettingsState.SecondaryColorString)"/>
+        @switch (QuizItem.QuestionType)
+        {
+            case QuestionTypeEnum.MultipleChoice:
+                @if (QuizItem.Question.Length > 1)
+                {
+                    <MainButton Text="a" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(0))"/>
+                }
+                @if (QuizItem.Question.Length > 2)
+                {
+                    <MainButton Text="b" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(1))"/>
+                }
+                @if (QuizItem.Question.Length > 3)
+                {
+                    <MainButton Text="c" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(2))"/>
+                }
+                @if (QuizItem.Question.Length > 4)
+                {
+                    <MainButton Text="d" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(3))"/>
+                }
+                
+                break;
+                
+            case QuestionTypeEnum.Boolean:
+                <MainButton Text="True" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(0))"/>
+                <MainButton Text="False" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(1))"/>
+                break;
+            case QuestionTypeEnum.Verbal:
+                <MainButton Text="Do you have your answer?" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandler(0))"/>
+                break;
+            
+            default:
+                break;
+        }
+    </div>
+
+</div>
+
+@code
+{
+    private IQuizItem QuizItem {get; set;}
+
+    private bool ShowAnswer {get; set;}
+    private int UserAnswerIndex {get; set;}
+
+    [Inject]
+    protected QuizDataService DataService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        QuizItem = DataService.GetNextQuizItem(0, 10);
+        ShowAnswer = false;
+        base.OnInitialized();
+    }
+
+    private void OnSkipHandler()
+    {
+        QuizItem = DataService.GetNextQuizItem(0, 10);
+        ShowAnswer = false;
+        StateHasChanged();
+    }
+
+    private void OnAnswerHandler(int answerIndex)
+    {
+        UserAnswerIndex = answerIndex;
+        ShowAnswer = true;
+        StateHasChanged();
+    }
+}    

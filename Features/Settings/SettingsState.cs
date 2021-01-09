@@ -7,6 +7,7 @@ namespace QuizTime.Features.Settings
         Green,
         Pink,
         Blue,
+        Undefined
     }
     
     
@@ -14,7 +15,26 @@ namespace QuizTime.Features.Settings
     {
         public ThemeColor ThemeColor { get; private set; }
 
+        public ThemeColor SecondaryColor
+        {
+            get
+            {               
+                switch (this.ThemeColor)
+                {
+                    case ThemeColor.Green:
+                        return ThemeColor.Blue;
+                    case ThemeColor.Blue:
+                        return ThemeColor.Pink;
+                    case ThemeColor.Pink:
+                        return ThemeColor.Green;
+                    default:
+                        return ThemeColor.Undefined;
+                }
+            }
+        }
+
         public string ThemeColorString => ThemeColor.ToString().ToLower();
+        public string SecondaryColorString => SecondaryColor.ToString().ToLower();
 
         public override void Initialize()
         {
