@@ -4,6 +4,7 @@
 @using QuizTime.Features.Game
 @using QuizTime.Features.Start
 @using QuizTime.Features.Play
+@using QuizTime.Features.NewGame
 @using QuizTime.Shared.UI
 
 <MainContainer>
@@ -15,6 +16,9 @@
             break;
         case GameMode.Play:
             <Play />
+            break;
+        case GameMode.NewGame:
+            <NewGame />
             break;
         default:
             <Start />

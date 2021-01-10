@@ -1,3 +1,6 @@
+@using QuizTime.Features.Settings
+@inherits SettingsStateComponentBase
+
 <button class="py-4 px-8 rounded-lg bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400" @onclick="@((args) => OnClickHandler(args))">@Text</button>
 
 @code
@@ -10,6 +13,12 @@
 
     [Parameter]
     public EventCallback OnClick { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Color = SettingsState.ThemeColorString;
+        base.OnInitialized();
+    }
 
     private async Task OnClickHandler(MouseEventArgs args)
     {  

@@ -3,15 +3,14 @@
 @using QuizTime.Features.Settings
 @using QuizTime.Features.Game 
 @using QuizTime.Shared.UI.Composite
+@using QuizTime.Shared.UI.Element
+@using Shared.UI
 
-<Header CustomClass="flex flex-col items-center">
-    <div> 
-        <h1 class="font-sans text-4xl">Quiz Time!</h1>
-    </div>
-</Header>
+<Header Title="Start" ShowClose="false" />
 
-<ContentArea CustomClass="flex flex-row justify-center items-center">
-    <PlayButton Click="OnClickPlay"/>
+<ContentArea CustomClass="flex flex-col justify-center items-center space-y-12">
+    <PlayButton OnClick="OnClickNewGame" Text="Play!" Size="Size.Large"/>
+    <MainButton Text="Add Players" OnClick="OnClickNewGame"/>
 </ContentArea>
 
 <Footer />
@@ -20,8 +19,13 @@
 {
     private GameState GameState => GetState<GameState>();
 
-    private void OnClickPlay()
+    private void OnClickNewGame()
     {
-        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Play });
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });
+    }
+
+    private void OnClickAddPlayers()
+    {
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.AddPlayers });
     }
 }

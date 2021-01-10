@@ -1,15 +1,35 @@
 @using QuizTime.Features.Settings
+@using QuizTime.Shared.UI.Element
 @inherits SettingsStateComponentBase
 
-<div class="bg-@(SettingsState.ThemeColorString)-500 text-white py-3 flex @CustomClass">
-    @ChildContent
+<div class="bg-@(SettingsState.ThemeColorString)-500 text-white py-3 flex flex-col">
+    <div class="flex flex-row justify-between items-center px-3">
+        <div class="w-8"></div>
+        <div class="">
+            <h1 class="font-sans text-4xl">@Title</h1>
+        </div>
+        <CloseButton OnClick="OnCloseClickHandler" />
+    </div>
 </div>
 
 @code
 {     
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public string Title {get; set;}
 
     [Parameter]
-    public string CustomClass {get; set;}
-}
+    public bool ShowClose {get; set;}
+
+    [Parameter]
+    public EventCallback OnClose {get; set;}
+
+    protected override void OnInitialized()
+    {
+        ShowClose = true;
+    }
+
+    public async Task OnCloseClickHandler()
+    {
+        await OnClose.InvokeAsync();
+    }
+}    

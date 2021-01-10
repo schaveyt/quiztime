@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using BlazorState;
@@ -18,6 +19,7 @@ namespace QuizTime.Features.Game
 
             public override Task<Unit> Handle(UpdateGameModeAction aAction, CancellationToken aCancellationToken)
             {
+                Console.WriteLine("UpdateGameModeHandler()...");
                 State.Mode = aAction.Value;
                 return Unit.Task;
             }

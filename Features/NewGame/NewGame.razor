@@ -1,0 +1,75 @@
+@using BlazorState
+@inherits SettingsStateComponentBase
+@using QuizTime.Features.Settings
+@using QuizTime.Features.Game 
+@using QuizTime.Shared.UI.Composite
+@using QuizTime.Shared.UI.Element
+@using Shared.Data
+
+<Header Title="New Game" OnClose="OnCloseHandler"/>
+@*CustomClass="flex flex-col justify-center items-center space-y-8" *@
+<ContentArea CustomClass="py-4">
+        @foreach (var player in Players)
+        {
+            <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md">
+                <label class="flex flex-row items-center space-x-3">
+                    <input type="checkbox" @onchange="@(args => CheckboxCheckedHandler(player, (bool)args.Value))" 
+                        class="form-tick h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none">
+                    <span class="font-medium text-lg">@player.Name</span>
+                </label>
+            </div>
+        }
+
+        <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md flex flex-row justify-center items-center">
+            <PlayButton Size="Shared.UI.Size.Small" OnClick="OnClickPlay"/>
+        </div>
+
+        @* @foreach (var playerName in GameState.Players.Keys)
+        {
+            <div class="p-4 mb-2 max-w-xs mx-auto bg-@(SettingsState.ThemeColorString)-200 rounded-xl shadow-md">
+                <label class="flex flex-row items-center space-x-3">
+                    <span class="font-medium text-lg">@playerName</span>
+                </label>
+            </div>
+        } *@
+</ContentArea> 
+
+<Footer />
+
+@code
+{
+    private GameState GameState => GetState<GameState>();
+
+    private IEnumerable<Player> Players {get; set;}
+
+    [Inject]
+    protected QuizDataService DataService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Players = DataService.GetPlayers();
+    }
+
+    private void OnClickPlay()
+    {
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Play });
+    }
+
+    private void OnCloseHandler()
+    {
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
+    }
+
+    private void CheckboxCheckedHandler(Player player, bool isChecked)
+    {   
+        Console.WriteLine($"CheckboxCheckedHandler({player.Name}, {isChecked})");
+        if (isChecked)
+        {
+            Mediator.Send(new GameState.AddPlayerAction { Value = player });
+        }
+        else
+        {
+            Mediator.Send(new GameState.DeletePlayerAction { Value = player });
+        }
+    }
+}    

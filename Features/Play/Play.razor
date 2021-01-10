@@ -5,15 +5,7 @@
 @using Shared.Data
 @inherits SettingsStateComponentBase
 
-<Header CustomClass="flex flex-col">
-    <div class="flex flex-row justify-between items-center px-3">
-        <div class="w-8"></div>
-        <div class="">
-            <h1 class="font-sans text-4xl">Question</h1>
-        </div>
-        <CloseButton OnClick="OnClickClose" />
-    </div>
-</Header>
+<Header Title="Question" OnClose="OnClickClose"/>
 
 <ContentArea CustomClass="flex flex-row justify-center">
     <QuestionAndAnswer />
@@ -29,7 +21,7 @@
 
     private void OnClickClose()
     {
-        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });
     }
 
     
