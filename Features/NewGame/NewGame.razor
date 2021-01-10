@@ -13,25 +13,20 @@
         {
             <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md">
                 <label class="flex flex-row items-center space-x-3">
-                    <input type="checkbox" @onchange="@(args => CheckboxCheckedHandler(player, (bool)args.Value))" 
+                    <input type="checkbox" checked="@(IsChecked(player))" @onchange="@(args => CheckboxCheckedHandler(player, (bool)args.Value))" 
                         class="form-tick h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none">
                     <span class="font-medium text-lg">@player.Name</span>
                 </label>
             </div>
         }
 
-        <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md flex flex-row justify-center items-center">
-            <PlayButton Size="Shared.UI.Size.Small" OnClick="OnClickPlay"/>
-        </div>
-
-        @* @foreach (var playerName in GameState.Players.Keys)
+        @if(GameState.Players.Count > 0)
         {
-            <div class="p-4 mb-2 max-w-xs mx-auto bg-@(SettingsState.ThemeColorString)-200 rounded-xl shadow-md">
-                <label class="flex flex-row items-center space-x-3">
-                    <span class="font-medium text-lg">@playerName</span>
-                </label>
+            <div class="p-4 mb-2 max-w-xs mx-auto flex flex-row justify-center items-center">
+                <PlayButton Size="Shared.UI.Size.Small" OnClick="OnClickPlay"/>
             </div>
-        } *@
+        }
+
 </ContentArea> 
 
 <Footer />
@@ -41,6 +36,8 @@
     private GameState GameState => GetState<GameState>();
 
     private IEnumerable<Player> Players {get; set;}
+
+    private bool ShowPlay {get; set;}
 
     [Inject]
     protected QuizDataService DataService { get; set; }
@@ -60,9 +57,13 @@
         Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
     }
 
+    private bool IsChecked(Player p)
+    {
+        return GameState.PlayerExists(p);
+    }
+
     private void CheckboxCheckedHandler(Player player, bool isChecked)
     {   
-        Console.WriteLine($"CheckboxCheckedHandler({player.Name}, {isChecked})");
         if (isChecked)
         {
             Mediator.Send(new GameState.AddPlayerAction { Value = player });

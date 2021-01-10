@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BlazorState;
@@ -19,8 +20,7 @@ namespace QuizTime.Features.Game
 
             public override Task<Unit> Handle(DeletePlayerAction aAction, CancellationToken aCancellationToken)
             {
-                Console.WriteLine("DeletePlayerHandler()...");
-                //State.Players.Remove(aAction.Value.Name);
+                State.PlayerRemove(aAction.Value);                
                 return Unit.Task;
             }
         }

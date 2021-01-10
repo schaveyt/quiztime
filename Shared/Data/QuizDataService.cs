@@ -56,6 +56,8 @@ namespace QuizTime.Shared.Data
             { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2 } },
             { "Izzy", new Player (){ Name = "Izzy", MinLevel = 0, MaxLevel = 2 } },
             { "Jack", new Player (){ Name = "Jack", MinLevel = 5, MaxLevel = 8 } },
+            { "Mom", new Player (){ Name = "Mom", MinLevel = 11, MaxLevel = 16 } },
+            { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16 } },
         };
 
         public IQuizItem GetNextQuizItem(int minSkillLevel, int maxSkillLevel)

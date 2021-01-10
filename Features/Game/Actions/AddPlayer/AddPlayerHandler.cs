@@ -19,8 +19,7 @@ namespace QuizTime.Features.Game
 
             public override Task<Unit> Handle(AddPlayerAction aAction, CancellationToken aCancellationToken)
             {
-                Console.WriteLine("AddPlayerHandler()...");
-                //State._players.Add(aAction.Value.Name, aAction.Value);
+                State.PlayerAdd(aAction.Value);
                 return Unit.Task;
             }
         }
