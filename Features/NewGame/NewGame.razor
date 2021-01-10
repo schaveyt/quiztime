@@ -1,5 +1,5 @@
 @using BlazorState
-@inherits SettingsStateComponentBase
+@inherits QuizTime.Shared.UI.SettingsStateComponentBase
 @using QuizTime.Features.Settings
 @using QuizTime.Features.Game 
 @using QuizTime.Shared.UI.Composite
@@ -7,7 +7,6 @@
 @using Shared.Data
 
 <Header Title="New Game" OnClose="OnCloseHandler"/>
-@*CustomClass="flex flex-col justify-center items-center space-y-8" *@
 <ContentArea CustomClass="py-4">
         @foreach (var player in Players)
         {

@@ -1,0 +1,49 @@
+@using BlazorState
+@using QuizTime.Features.Settings
+@using QuizTime.Features.Game 
+@using QuizTime.Shared.UI.Composite
+@using QuizTime.Shared.UI.Element
+@using Shared.Data
+@inherits QuizTime.Shared.UI.SettingsStateComponentBase
+
+<Header Title="On Deck" ShowClose="false" />
+<ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
+    <div class="flex flex-col justify-center items-center space-y-4">
+        <div class="text-4xl">Get Ready...</div>
+        <div class="text-6xl text-@(SettingsState.SecondaryColorString)-500">@GameState.CurrentPlayer.Name</div>
+    </div>
+    <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
+        <div class="text-6xl">@timeRemaining</div>
+    </Countdown>
+
+</ContentArea> 
+
+<Footer />
+
+@code
+{
+    private GameState GameState => GetState<GameState>();
+
+    protected uint timeRemaining {get;set;}
+
+    [Inject]
+    protected QuizDataService DataService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var nextQuestion = await DataService.GetNextQuizItem(
+            GameState.CurrentPlayer.MinLevel, GameState.CurrentPlayer.MaxLevel);
+        await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });
+    }
+
+    
+
+    protected void OnTimeRemainingChanged(uint newTimeRemaining)
+    {
+        timeRemaining = newTimeRemaining;
+        if (timeRemaining == 0)
+        {
+            Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.Question });
+        }
+    }
+} 

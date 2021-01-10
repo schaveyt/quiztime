@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace QuizTime.Shared.Data
 {
@@ -60,8 +61,9 @@ namespace QuizTime.Shared.Data
             { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16 } },
         };
 
-        public IQuizItem GetNextQuizItem(int minSkillLevel, int maxSkillLevel)
+        public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
+            await Task.Delay(2000);
             var index = new Random().Next(0, _testdata.Count);
             return _testdata[index];
         }

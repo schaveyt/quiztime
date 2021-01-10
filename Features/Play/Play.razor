@@ -3,26 +3,22 @@
 @using QuizTime.Shared.UI.Element
 @using QuizTime.Shared.UI.Composite
 @using Shared.Data
-@inherits SettingsStateComponentBase
+@inherits QuizTime.Shared.UI.SettingsStateComponentBase
 
-<Header Title="Question" OnClose="OnClickClose"/>
-
-<ContentArea CustomClass="flex flex-row justify-center">
-    <QuestionAndAnswer />
-</ContentArea>
-
-<Footer />
+@switch (GameState.PlayMode)
+{
+    case PlayMode.OnDeck:
+        <OnDeck/>
+        break;
+    case PlayMode.Question:
+        <QuestionAndAnswer/>
+        break;
+    default:
+        break;
+}
 
 @code
 {
     private GameState GameState => GetState<GameState>();
 
-    
-
-    private void OnClickClose()
-    {
-        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });
-    }
-
-    
 }

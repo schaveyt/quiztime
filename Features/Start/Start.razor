@@ -6,11 +6,11 @@
 @using QuizTime.Shared.UI.Element
 @using Shared.UI
 
-<Header Title="Start" ShowClose="false" />
+<Header Title="Quiz Time!" ShowClose="false" />
 
 <ContentArea CustomClass="flex flex-col justify-center items-center space-y-12">
     <PlayButton OnClick="OnClickNewGame" Text="Play!" Size="Size.Large"/>
-    <MainButton Text="Add Players" OnClick="OnClickNewGame"/>
+    @* <MainButton Text="Add Players" OnClick="OnClickNewGame"/> *@
 </ContentArea>
 
 <Footer />
