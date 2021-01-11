@@ -32,7 +32,7 @@
 
             </div>
         </div>
-        <div id="admin-content-main-listview-content" class="flex-auto border divide-y divide-gray-300">
+        <div id="admin-content-main-listview-content" class="flex-auto border divide-y divide-gray-300 bg-gray-50">
 
             @foreach(var questionSet in QuestionSetList)
             {
@@ -55,7 +55,56 @@
 
         </div>
     </div>
-    <div id="admin-content-main-view-content" class="flex-auto flex flex-col border-l border-gray-400 shadow-xl"></div>
+    <div id="admin-content-main-view-content" class="flex-auto flex flex-col border-l border-gray-400 shadow-xl">
+        <div id="admin-content-main-details-header" class="flex-none h-14 border-b border-gray-400 shadow flex flex-row justify-between items-center">
+            <div id="header-icon-group-left" class="flex flex-row items-center">
+                <div class="uppercase text-sm font-semibold pl-3">Question Sets Details:</div>
+                <div class="text-sm pl-3">1st Grade Science</div>
+            </div>
+            <div id="header-icon-group-right" class="flex flex-row space-x-2 items-center">
+                <div class="">
+                    <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                            d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <div class="">
+                    <svg class="w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                    </svg>
+                </div>
+                <div class="pr-2">
+                    <svg class="w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+        <div id="admin-content-main-details-content" class="flex-auto border divide-y divide-gray-300 bg-gray-50">
+
+            @foreach(var questionSet in QuestionSetList)
+            {
+                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{SettingsState.ThemeColorString}-200" : "") hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row items-center">
+                    <div class="pl-2 flex none flex flex-row items-center">
+                        <svg class="w-6 h-6 pl-2 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <p class="pl-1 pr-1 truncate ...">@questionSet.Name</p>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
 </div>
 
 @code
