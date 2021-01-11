@@ -55,7 +55,10 @@ a,
   padding: 2px 6px;
   position: absolute;
   z-index: 100;
+  opacity: 0; 
+  transition: opacity 1s;
 }
 .tooltip:hover .tooltip-text {
   visibility: visible;
+  opacity: 1;
 }
