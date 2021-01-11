@@ -6,7 +6,7 @@
 @using QuizTime.Shared.UI.Element
 @using Shared.Data
 
-<Header Title="New Game" OnClose="OnCloseHandler"/>
+<Header Title="New Game" ShowCloseButton="true" OnClose="OnCloseHandler"/>
 <ContentArea CustomClass="py-4">
         @foreach (var player in Players)
         {

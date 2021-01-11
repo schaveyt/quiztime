@@ -41,12 +41,6 @@
     [Parameter]
     public EventCallback OnClose {get; set;}
 
-    protected override void OnInitialized()
-    {
-        ShowCloseButton = true;
-        ShowSettingsButtton = true;
-    }
-
     protected async Task OnCloseClickHandler()
     {
         await OnClose.InvokeAsync();
