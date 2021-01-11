@@ -3,7 +3,7 @@
 
 <div id="admin-content-main" class="flex-auto flex flex-row">
     <div id="admin-content-main-listview" class="flex-none w-64 flex flex-col">
-        <div id="admin-content-main-listview-header" class="flex-none h-14 border-b border-gray-400 shadow bg-@(SettingsState.ThemeColorString)-300 flex flex-row justify-between items-center">
+        <div id="admin-content-main-listview-header" class="flex-none h-14 border-b border-gray-400 shadow flex flex-row justify-between items-center">
             <div id="header-icon-group-left">
                 <div class="uppercase text-sm font-semibold pl-3">Question Sets</div>
             </div>
@@ -32,11 +32,11 @@
 
             </div>
         </div>
-        <div id="admin-content-main-listview-content" class="flex-auto border">
+        <div id="admin-content-main-listview-content" class="flex-auto border divide-y divide-gray-300">
 
             @foreach(var questionSet in QuestionSetList)
             {
-                <div id="item" class="h-10 border-b border-gray-400 hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row items-center">
+                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{SettingsState.ThemeColorString}-200" : "") hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row items-center">
                     <div class="pl-2 flex none flex flex-row items-center">
 
                         <input type="checkbox"
@@ -63,12 +63,13 @@
     public class QuestionSet
     {
         public string Name {get; set;}
+        public bool ShowDetails {get; set;}
     }
 
     protected List<QuestionSet> QuestionSetList = new List<QuestionSet>()
     {
         new QuestionSet {Name="Defualt"},
-        new QuestionSet {Name="1st Grade Science"},
+        new QuestionSet {Name="1st Grade Science", ShowDetails=true},
         new QuestionSet {Name="6th Grade Science"},
     };
 }
