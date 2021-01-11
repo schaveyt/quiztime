@@ -1,0 +1,28 @@
+@inherits QuizTime.Shared.UI.SettingsStateComponentBase
+@using QuizTime.Features.Settings
+
+<div id="admin-sidebar-main"
+    class="flex-none w-14 bg-@(SettingsState.ThemeColorString)-900 flex flex-col justify-between">
+    <div id="admin-sidebar-items-top-group" class="flex flex-col space-y-3">
+        <div id="admin-sidebar-sidebar-item-quesitons" class="mt-3 tooltip @SideBarItemCustomClass">
+            <div>
+                <svg class="w-8 h-8 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+            </div>
+            <span class="@SideBarItemTooltipCustomClass">Question Sets</span>
+        </div>
+
+    </div>
+</div>
+
+@code
+{
+    protected string SideBarItemCustomClass => 
+        $"cursor-pointer py-3 text-white flex flex-row justify-center hover:bg-{SettingsState.ThemeColorString}-500 hover:text-{SettingsState.ThemeColorString}-100";
+
+    protected string SideBarItemTooltipCustomClass => 
+        $"tooltip-text bg-{SettingsState.ThemeColorString}-200 border rounded border-{SettingsState.ThemeColorString}-500 text-{SettingsState.ThemeColorString}-700 ml-32";
+
+}
