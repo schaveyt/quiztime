@@ -1,0 +1,15 @@
+@page "/admin"
+@using QuizTime.Shared.UI.Composite
+
+
+<Header ShowClose="false" Title="Admin" OnClose="OnCloseHandler" />
+
+@code
+{
+    [Inject]
+    NavigationManager NavManager {get;set;}
+    protected void OnCloseHandler()
+    {
+        NavManager.NavigateTo("/");
+    }
+}

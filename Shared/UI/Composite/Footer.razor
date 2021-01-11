@@ -3,7 +3,7 @@
 
 <div id="footer" class="bg-@(SettingsState.ThemeColorString)-700 py-2 px-3 text-white text-xs text-center">
     <div class="flex flex-row justify-between">
-        <div class="flex flex-row items-center justify-start">
+        <div class="flex flex-row items-center justify-start space-x-2">
             <div class="pr-2">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"
                     enable-background="new 0 0 64 64">
@@ -21,6 +21,7 @@
                 </svg>
             </div>
             <span>rainbow &copy; 2021 </span>
+            <NavLink class="text-white" href="admin">Admin</NavLink>
         </div>
         <div class="flex flex-row space-x-3">
             <div class="w-4 bg-pink-500 rounded-full" @onclick="(e => OnThemeColorChanged(ThemeColor.Pink))"></div>
