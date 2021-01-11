@@ -1,14 +1,22 @@
 @using QuizTime.Features.Settings
 @using QuizTime.Shared.UI.Element
 @inherits SettingsStateComponentBase
+@inject NavigationManager NavManager
 
 <div class="bg-@(SettingsState.ThemeColorString)-500 text-white py-3 flex flex-col">
     <div class="flex flex-row justify-between items-center px-3">
-        <div class="w-8"></div>
-        <div class="">
+        @if(ShowSettingsButtton)
+        {
+            <SettingsButton OnClick="OnSettingsClickHandler" CustomClass="opacity-70 hover:opacity-100" />
+        }
+        else
+        {
+            <div class="w-8"></div>
+        }
+        <div>
             <h1 class="font-sans text-4xl">@Title</h1>
         </div>
-        @if(ShowClose)
+        @if(ShowCloseButton)
         {
             <CloseButton OnClick="OnCloseClickHandler" />
         }
@@ -25,18 +33,27 @@
     public string Title {get; set;}
 
     [Parameter]
-    public bool ShowClose {get; set;}
+    public bool ShowCloseButton {get; set;}
+
+    [Parameter]
+    public bool ShowSettingsButtton {get; set;}
 
     [Parameter]
     public EventCallback OnClose {get; set;}
 
     protected override void OnInitialized()
     {
-        ShowClose = true;
+        ShowCloseButton = true;
+        ShowSettingsButtton = true;
     }
 
-    public async Task OnCloseClickHandler()
+    protected async Task OnCloseClickHandler()
     {
         await OnClose.InvokeAsync();
+    }
+
+    protected void OnSettingsClickHandler()
+    {
+        NavManager.NavigateTo("/admin");
     }
 }    

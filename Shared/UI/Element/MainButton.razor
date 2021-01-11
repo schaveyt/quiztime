@@ -1,7 +1,7 @@
 @using QuizTime.Features.Settings
 @inherits SettingsStateComponentBase
 
-<button class="py-4 px-8 rounded-lg bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400" @onclick="@((args) => OnClickHandler(args))">@Text</button>
+<button class="py-4 px-8 rounded-lg bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400 @CustomClass" @onclick="@((args) => OnClickHandler(args))">@Text</button>
 
 @code
 {
@@ -10,6 +10,9 @@
 
     [Parameter]
     public string Text {get; set;}
+
+    [Parameter]
+    public string CustomClass {get; set;}
 
     [Parameter]
     public EventCallback OnClick { get; set; }

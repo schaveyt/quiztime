@@ -1,4 +1,4 @@
-<div class="text-white cursor-pointer opacity-70 hover:opacity-100" @onclick="OnClickHandler">
+<div class="text-white cursor-pointer opacity-70 hover:opacity-100 @CustomClass" @onclick="OnClickHandler">
     <svg class="w-8 h-8 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
@@ -6,6 +6,9 @@
 
 @code
 {
+    [Parameter]
+    public string CustomClass {get; set;}
+
     [Parameter]
     public EventCallback OnClick { get; set; }
 

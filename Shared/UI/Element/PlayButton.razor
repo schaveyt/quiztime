@@ -3,7 +3,7 @@
 @using QuizTime.Features.Settings
 @using QuizTime.Shared.UI
 
-<div class="text-@(SettingsState.ThemeColorString)-500 flex flex-col cursor-pointer hover:text-@(SettingsState.ThemeColorString)-500"
+<div class="text-@(SettingsState.ThemeColorString)-500 flex flex-col cursor-pointer hover:text-@(SettingsState.ThemeColorString)-500 @CustomClass"
     @onclick="@((args) => OnClickHandler(args))">
     <div>
         <svg class="@Dimensions stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -30,6 +30,9 @@
 
     [Parameter]
     public Size Size {get; set;}
+
+    [Parameter]
+    public string CustomClass {get; set;}
    
     private async Task OnClickHandler(MouseEventArgs e)
     {
