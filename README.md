@@ -11,13 +11,13 @@ __Features:__
 
 ### Tech Stack
 
-| Layer/Feature | Tech | Platform Version | Notes |
-|---------------|------|-------|----------|
-| Web Client    |  Blazor Web Assembly | .NET 5.0 | n/a | 
-| Web Client State Management | Blazor State | .NET 5.0 | n/a |
-| Web Client Styling | tailwindcss v2.0 | n/a | n/a |
-| Data API      | FeatherHTTP | .NET Core 3.1 | Loads csv file of question into memory |
-| Data Storage  | CSV | n/a |Stores the quiz questions to disk |
+| Layer/Feature               | Tech                | Platform Version | Notes                                  |
+| --------------------------- | ------------------- | ---------------- | -------------------------------------- |
+| Web Client                  | Blazor Web Assembly | .NET 5.0         | n/a                                    |
+| Web Client State Management | Blazor State        | .NET 5.0         | n/a                                    |
+| Web Client Styling          | tailwindcss v2.0    | n/a              | n/a                                    |
+| Data API                    | FeatherHTTP         | .NET Core 3.1    | Loads csv file of question into memory |
+| Data Storage                | CSV                 | n/a              | Stores the quiz questions to disk      |
 
 
 ### Prerequisites
