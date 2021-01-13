@@ -1,6 +1,6 @@
 # QuizTime!
 
-QuizTime was created out of the fun my wife and kids have while quizing each other trivia questions at dinner. 
+QuizTime was created from the fun my wife and kids have quizing each other random trivia questions at dinnertime. 
 
 __Features:__
 
