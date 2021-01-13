@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using QuizTime.Shared.Data;
+using System.IO;
 
 namespace QuizTime.Api.Rest
 {
@@ -34,7 +35,9 @@ namespace QuizTime.Api.Rest
             app.MapGet("/api/items", GetQuizItems);
             app.MapGet("/api/random/{id}", GetRandomQuizItem);
             
-            await InitializeSeedData();           
+            await InitializeSeedData();
+
+            //await StoreQuizItems(null);           
 
             await app.RunAsync();
         }
@@ -42,69 +45,30 @@ namespace QuizTime.Api.Rest
         static async Task InitializeSeedData()
         {
             var db = new QuizTimeDbContext();
-
-            await db.QuizItems.AddAsync(
-                new MultipleChoiceQuizItem
-                (
-                    question: "Which of these is not an ocean?",
-                    choices: new string[]
+            using (FileStream fs = new FileStream("data-import.csv", FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new StreamReader(fs))
+                {
+                    string line;
+                    while ((line = await reader.ReadLineAsync()) != null)
                     {
-                        "Pacific",
-                        "Atlantic",
-                        "Oceanitic",
-                        "Indian"
-                    },
-                    answerIndex: 2
-                )
-            );
+                        var cols = line.Split(',');
+                        var answerIndex = 0;
+                        Int32.TryParse(cols[3], out answerIndex);
 
-            await db.QuizItems.AddAsync(
-                new MultipleChoiceQuizItem
-                (
-                    question: "What is the captial of France?",
-                    choices: new string[]
-                    {
-                        "Paris",
-                        "Berlin"
-                    },
-                    answerIndex: 0
-                )
-            );
-
-            await db.QuizItems.AddAsync(
-                new BooleanQuizItem
-                (
-                    question: "The largest U.S. state is Michigan.",
-                    answer: false
-                )
-            );
-
-            await db.QuizItems.AddAsync(
-                new BooleanQuizItem
-                (
-                    question: "The largest U.S. state is Alaska.",
-                    answer: true
-                )
-            );
-
-            await db.QuizItems.AddAsync(
-                new BooleanQuizItem
-                (
-                    question: "The Michigan state bird is the robin.",
-                    answer: true
-                )
-            );
-
-            await db.QuizItems.AddAsync(
-                new BooleanQuizItem
-                (
-                    question: "Florida is full of crazy people.",
-                    answer: true
-                )
-            );
+                        await db.QuizItems.AddAsync(
+                            new QuizItemDto()
+                            {
+                                Question = cols[2],
+                                QuestionType =  cols[0][0] == 'M' ? QuestionTypeEnum.MultipleChoice : QuestionTypeEnum.Boolean,
+                                AnswerIndex = answerIndex
+                            }
+                        );
+                    }
+                }
+            }
 
             await db.SaveChangesAsync();
-
         }
 
 
@@ -130,6 +94,22 @@ namespace QuizTime.Api.Rest
 
             var quizItem = db.QuizItems.FindAsync(randomId);
             await http.Response.WriteJsonAsync(quizItem.Result);
+        }
+
+        static async Task StoreQuizItems(HttpContext http)
+        {
+            using var db = new QuizTimeDbContext();
+            var results = await db.QuizItems.ToListAsync();
+
+            // Write the specified text asynchronously to a new file named "WriteTextAsync.txt".
+            using (StreamWriter outputFile = new StreamWriter("data-export.csv"))
+            {
+                foreach (var item in results)
+                {
+                    await outputFile.WriteLineAsync($"{item.QuestionType},{0},{item.Question},{item.AnswerIndex}");
+                }
+            }
+            
         }
 
         
