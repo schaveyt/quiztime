@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BlazorState;
 using MediatR;
 
-namespace QuizTime.Features.Game
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public partial class GameState
     {

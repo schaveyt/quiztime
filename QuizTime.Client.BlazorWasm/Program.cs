@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorState;
 using System.Reflection;
-using QuizTime.Shared.Data;
+using QuizTime.Client.BlazorWasm.Shared.Data;
 
-namespace QuizTime
+namespace QuizTime.Client.BlazorWasm
 {
     public class Program
     {

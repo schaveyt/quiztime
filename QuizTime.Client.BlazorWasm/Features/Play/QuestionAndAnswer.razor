@@ -1,9 +1,9 @@
-@using Game
-@using QuizTime.Shared.UI.Composite
-@using QuizTime.Shared.UI.Element
-@using Shared.Data
-@using QuizTime.Features.Settings
-@inherits QuizTime.Shared.UI.SettingsStateComponentBase
+@using QuizTime.Client.BlazorWasm.Features.Game
+@using QuizTime.Client.BlazorWasm.Shared.UI.Composite
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Shared.Data
+@using QuizTime.Client.BlazorWasm.Features.Settings
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
 
 <Header Title="Question" ShowCloseButton="true" OnClose="OnClickClose"/>
 <ContentArea CustomClass="flex flex-row justify-center">
@@ -123,7 +123,7 @@
 {
     private GameState GameState => GetState<GameState>();
 
-    private IQuizItem QuizItem => GameState.CurrentQuizItem;
+    private QuizItem QuizItem => GameState.CurrentQuizItem;
 
     private Player Player => GameState.CurrentPlayer;
 

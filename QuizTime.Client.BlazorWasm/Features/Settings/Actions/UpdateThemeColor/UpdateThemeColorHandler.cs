@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using BlazorState;
 using MediatR;
 
-namespace QuizTime.Features.Settings
+namespace QuizTime.Client.BlazorWasm.Features.Settings
 {
     public partial class SettingsState
     {

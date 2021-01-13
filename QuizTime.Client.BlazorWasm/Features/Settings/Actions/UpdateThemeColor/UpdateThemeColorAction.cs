@@ -2,7 +2,7 @@
 
 using BlazorState;
 
-namespace QuizTime.Features.Settings
+namespace QuizTime.Client.BlazorWasm.Features.Settings
 {
     public partial class SettingsState
     {

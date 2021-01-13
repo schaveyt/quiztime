@@ -1,6 +1,6 @@
 using BlazorState;
 
-namespace QuizTime.Features.Settings
+namespace QuizTime.Client.BlazorWasm.Features.Settings
 {
     public enum ThemeColor
     {

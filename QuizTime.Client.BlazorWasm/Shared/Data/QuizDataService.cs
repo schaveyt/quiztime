@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using QuizTime.Shared.Data;
 
-namespace QuizTime.Shared.Data
+namespace QuizTime.Client.BlazorWasm.Shared.Data
 {
     public class QuizDataService
     {
-        private static readonly List<IQuizItem> _testdata = new List<IQuizItem>
+        private static readonly List<QuizItem> _testdata = new List<QuizItem>
         {
             new MultipleChoiceQuizItem
             (
@@ -61,7 +62,7 @@ namespace QuizTime.Shared.Data
             { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16 } },
         };
 
-        public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
+        public async Task<QuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
             await Task.Delay(2000);
             var index = new Random().Next(0, _testdata.Count);

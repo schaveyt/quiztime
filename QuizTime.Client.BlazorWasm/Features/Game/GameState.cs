@@ -5,7 +5,7 @@ using System.Text;
 using System;
 using Microsoft.AspNetCore.Components;
 
-namespace QuizTime.Features.Game
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public enum GameMode
     {
@@ -85,7 +85,7 @@ namespace QuizTime.Features.Game
 
         public List<Player> Players => _players;
 
-        public IQuizItem CurrentQuizItem {get; private set;}
+        public QuizItem CurrentQuizItem {get; private set;}
 
         public override void Initialize()
         {

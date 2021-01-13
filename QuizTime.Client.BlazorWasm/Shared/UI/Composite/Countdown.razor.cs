@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace QuizTime.Shared.UI.Composite
+namespace QuizTime.Client.BlazorWasm.Shared.UI.Composite
 {
     public class CountdownBase : SettingsStateComponentBase, IDisposable
     {
