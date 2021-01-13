@@ -34,7 +34,7 @@ dotnet watch run
 
 ## Run the Blazor Wasm Client
 
-The clicent operates at https://0.0.0.0:5001
+The client operates at https://0.0.0.0:5001
 
 ~~~bash
 cd QuizTime.Client.BlazorWasm
