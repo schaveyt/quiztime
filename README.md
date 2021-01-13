@@ -7,9 +7,7 @@ __Features:__
 - Group Play for all skill levels
 - Add and manage set of quiz questions
 
-## Build
-
-### Tech Stack
+## Tech Stack
 
 | Layer/Feature               | Tech                | Platform Version | Notes                                  |
 | --------------------------- | ------------------- | ---------------- | -------------------------------------- |
@@ -20,11 +18,28 @@ __Features:__
 | Data Storage                | CSV                 | n/a              | Stores the quiz questions to disk      |
 
 
-### Prerequisites
+## Prerequisites
 
 - .NET 5 SDK
 
   
+## Run the API
+
+The API operates at https://0.0.0.0:3000
+
+~~~bash
+cd QuizTime.Api.Rest
+dotnet watch run
+~~~
+
+## Run the Blazor Wasm Client
+
+The clicent operates at https://0.0.0.0:5001
+
+~~~bash
+cd QuizTime.Client.BlazorWasm
+dotnet watch run
+~~~
 
 
 
