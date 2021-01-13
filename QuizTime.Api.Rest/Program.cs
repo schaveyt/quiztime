@@ -31,7 +31,8 @@ namespace QuizTime.Api.Rest
             var app = builder.Build();
             app.UseCors();
             app.Listen("https://0.0.0.0:3000");
-            app.MapGet("/api/items", GetTodos);
+            app.MapGet("/api/items", GetQuizItems);
+            app.MapGet("/api/random/{id}", GetRandomQuizItem);
             
             await InitializeSeedData();           
 
@@ -107,12 +108,31 @@ namespace QuizTime.Api.Rest
         }
 
 
-        static async Task GetTodos(HttpContext http)
+        static async Task GetQuizItems(HttpContext http)
         {
             using var db = new QuizTimeDbContext();
             var results = await db.QuizItems.ToListAsync();
             await http.Response.WriteJsonAsync(results);
         }
+
+        // "/random/{id}
+        static async Task GetRandomQuizItem(HttpContext http)
+        {
+            if (!http.Request.RouteValues.TryGet("id", out int id))
+            {
+                http.Response.StatusCode = 400;
+                return;
+            }
+
+            using var db = new QuizTimeDbContext();
+            var itemCount = await db.QuizItems.CountAsync();
+            var randomId = new Random().Next(0, itemCount);
+
+            var quizItem = db.QuizItems.FindAsync(randomId);
+            await http.Response.WriteJsonAsync(quizItem.Result);
+        }
+
+        
     }
 
 }

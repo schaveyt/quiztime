@@ -24,28 +24,20 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
         public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
-            var items = await Http.GetFromJsonAsync<QuizItemDto[]>("api/items");
+            var item = await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");
             
-            var convertedItems = new List<IQuizItem>();
-            foreach (var i in items)
+            if (item.QuestionType == QuestionTypeEnum.MultipleChoice)
             {
-                switch (i.QuestionType)
-                {
-                    case QuestionTypeEnum.MultipleChoice:
-                        convertedItems.Add((MultipleChoiceQuizItem)i);
-                        break;
-                    case QuestionTypeEnum.Boolean:
-                        convertedItems.Add((BooleanQuizItem)i);
-                        break;
-                    default:
-                        break;
-                }
+                return (MultipleChoiceQuizItem)item;
             }
 
-            var index = new Random().Next(0, convertedItems.Count);
+            if (item.QuestionType == QuestionTypeEnum.Boolean)
+            {
+                return (BooleanQuizItem)item;
+            }
 
-            return convertedItems[index];
-        }
+            throw new Exception("Unsupported QuestionType encountered");
+         }
 
         public IEnumerable<Player> GetPlayers()
         {
