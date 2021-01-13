@@ -1,12 +1,11 @@
 
 using BlazorState;
-using QuizTime.Features.Settings;
+using QuizTime.Client.BlazorWasm.Features.Settings;
 
-namespace QuizTime.Shared.UI
+namespace QuizTime.Client.BlazorWasm.Shared.UI
 {
     public class SettingsStateComponentBase : BlazorStateComponent
     {
-
         protected SettingsState SettingsState => GetState<SettingsState>();
     }
 

@@ -1,10 +1,11 @@
 @using BlazorState
-@using QuizTime.Features.Settings
-@using QuizTime.Features.Game 
-@using QuizTime.Shared.UI.Composite
-@using QuizTime.Shared.UI.Element
-@using Shared.Data
-@inherits QuizTime.Shared.UI.SettingsStateComponentBase
+@using QuizTime.Client.BlazorWasm.Features.Settings
+@using QuizTime.Client.BlazorWasm.Features.Game 
+@using QuizTime.Client.BlazorWasm.Shared.Data
+@using QuizTime.Client.BlazorWasm.Shared.UI.Composite
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Shared.Data
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
 
 <Header Title="On Deck" ShowCloseButton="false" />
 <ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
@@ -27,10 +28,14 @@
     protected uint timeRemaining {get;set;}
 
     [Inject]
+    protected HttpClient Http { get; set; }
+
+    [Inject]
     protected QuizDataService DataService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        DataService.Http = Http;
         var nextQuestion = await DataService.GetNextQuizItem(
             GameState.CurrentPlayer.MinLevel, GameState.CurrentPlayer.MaxLevel);
         await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });

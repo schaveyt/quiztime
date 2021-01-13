@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorState;
 using System.Reflection;
-using QuizTime.Shared.Data;
+using QuizTime.Client.BlazorWasm.Shared.Data;
 
-namespace QuizTime
+namespace QuizTime.Client.BlazorWasm
 {
     public class Program
     {
@@ -20,7 +20,8 @@ namespace QuizTime
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            Console.WriteLine(builder.HostEnvironment.BaseAddress);
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://0.0.0.0:3000/") });
             builder.Services.AddSingleton<QuizDataService, QuizDataService>();
 
             ConfigureServices(builder.Services);

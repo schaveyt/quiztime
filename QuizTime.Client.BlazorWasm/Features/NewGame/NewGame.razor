@@ -1,10 +1,11 @@
 @using BlazorState
-@inherits QuizTime.Shared.UI.SettingsStateComponentBase
-@using QuizTime.Features.Settings
-@using QuizTime.Features.Game 
-@using QuizTime.Shared.UI.Composite
-@using QuizTime.Shared.UI.Element
-@using Shared.Data
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@using QuizTime.Client.BlazorWasm.Features.Settings
+@using QuizTime.Client.BlazorWasm.Features.Game 
+@using QuizTime.Client.BlazorWasm.Shared.Data
+@using QuizTime.Client.BlazorWasm.Shared.UI.Composite
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Shared.Data
 
 <Header Title="New Game" ShowCloseButton="true" OnClose="OnCloseHandler"/>
 <ContentArea CustomClass="py-4">

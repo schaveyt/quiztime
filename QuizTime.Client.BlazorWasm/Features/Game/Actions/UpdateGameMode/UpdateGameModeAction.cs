@@ -1,7 +1,7 @@
 
 using BlazorState;
 
-namespace QuizTime.Features.Game
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public partial class GameState
     {

@@ -2,7 +2,7 @@
 using BlazorState;
 using QuizTime.Shared.Data;
 
-namespace QuizTime.Features.Game
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public partial class GameState
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System;
 using Microsoft.AspNetCore.Components;
 
-namespace QuizTime.Features.Game
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public enum GameMode
     {

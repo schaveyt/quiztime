@@ -1,56 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using QuizTime.Shared.Data;
 
-namespace QuizTime.Shared.Data
+namespace QuizTime.Client.BlazorWasm.Shared.Data
 {
     public class QuizDataService
     {
-        private static readonly List<IQuizItem> _testdata = new List<IQuizItem>
-        {
-            new MultipleChoiceQuizItem
-            (
-                question: "Which of these is not an ocean?",
-                choices: new string[]
-                {
-                    "Pacific",
-                    "Atlantic",
-                    "Oceanitic",
-                    "Indian"
-                },
-                answerIndex: 2
-            ),
-            new MultipleChoiceQuizItem
-            (
-                question: "What is the captial of France?",
-                choices: new string[]
-                {
-                    "Paris", 
-                    "Berlin"
-                },
-                answerIndex: 0
-            ),
-            new BooleanQuizItem
-            (
-                question: "The largest U.S. state is Michigan.",
-                answer: false
-            ),
-            new BooleanQuizItem
-            (
-                question: "The largest U.S. state is Alaska.",
-                answer: true
-            ),
-            new BooleanQuizItem
-            (
-                question: "The Michigan state bird is the robin.",
-                answer: true
-            ),
-            new BooleanQuizItem
-            (
-                question: "Florida is full of crazy people.",
-                answer: true
-            ),
-        };
+        [Inject]
+        public HttpClient Http { get; set; }
 
         private static readonly SortedList<string, Player> _testplayers = new SortedList<string, Player>
         {
@@ -63,9 +24,27 @@ namespace QuizTime.Shared.Data
 
         public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
-            await Task.Delay(2000);
-            var index = new Random().Next(0, _testdata.Count);
-            return _testdata[index];
+            var items = await Http.GetFromJsonAsync<QuizItemDto[]>("api/items");
+            
+            var convertedItems = new List<IQuizItem>();
+            foreach (var i in items)
+            {
+                switch (i.QuestionType)
+                {
+                    case QuestionTypeEnum.MultipleChoice:
+                        convertedItems.Add((MultipleChoiceQuizItem)i);
+                        break;
+                    case QuestionTypeEnum.Boolean:
+                        convertedItems.Add((BooleanQuizItem)i);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            var index = new Random().Next(0, convertedItems.Count);
+
+            return convertedItems[index];
         }
 
         public IEnumerable<Player> GetPlayers()

@@ -1,6 +1,6 @@
 
 
-namespace QuizTime.Shared.UI
+namespace QuizTime.Client.BlazorWasm.Shared.UI
 {
     public enum Size
     {

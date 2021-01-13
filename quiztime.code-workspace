@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "QuizTime.Api.Rest"
+		},
+		{
+			"path": "QuizTime.Shared"
+		},
+		{
+			"path": "QuizTime.Client.BlazorWasm"
+		}
+	]
+}

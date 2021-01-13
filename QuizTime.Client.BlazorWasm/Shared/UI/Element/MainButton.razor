@@ -1,5 +1,5 @@
-@using QuizTime.Features.Settings
-@inherits SettingsStateComponentBase
+@using QuizTime.Client.BlazorWasm.Features.Settings
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
 
 <button class="py-4 px-8 rounded-lg bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400 @CustomClass" @onclick="@((args) => OnClickHandler(args))">@Text</button>
 
