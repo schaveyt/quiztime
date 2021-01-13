@@ -123,7 +123,7 @@
 {
     private GameState GameState => GetState<GameState>();
 
-    private QuizItem QuizItem => GameState.CurrentQuizItem;
+    private IQuizItem QuizItem => GameState.CurrentQuizItem;
 
     private Player Player => GameState.CurrentPlayer;
 

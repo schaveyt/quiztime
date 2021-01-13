@@ -28,10 +28,14 @@
     protected uint timeRemaining {get;set;}
 
     [Inject]
+    protected HttpClient Http { get; set; }
+
+    [Inject]
     protected QuizDataService DataService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        DataService.Http = Http;
         var nextQuestion = await DataService.GetNextQuizItem(
             GameState.CurrentPlayer.MinLevel, GameState.CurrentPlayer.MaxLevel);
         await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });

@@ -8,7 +8,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
     {
         public class UpdateQuizQuestionAction : IAction
         {
-            public QuizItem Value { get; set; }
+            public IQuizItem Value { get; set; }
         }
     }
 }

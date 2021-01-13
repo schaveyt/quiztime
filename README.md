@@ -16,7 +16,7 @@ __Features:__
 | Web Client                  | Blazor Web Assembly | .NET 5.0         | n/a                                    |
 | Web Client State Management | Blazor State        | .NET 5.0         | n/a                                    |
 | Web Client Styling          | tailwindcss v2.0    | n/a              | n/a                                    |
-| Data API                    | FeatherHTTP         | .NET Core 3.1    | Loads csv file of question into memory |
+| Data API                    | [FeatherHTTP](https://github.com/featherhttp/tutorial) | .NET Core 3.1    | Loads csv file of question into memory |
 | Data Storage                | CSV                 | n/a              | Stores the quiz questions to disk      |
 
 

@@ -85,7 +85,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
 
         public List<Player> Players => _players;
 
-        public QuizItem CurrentQuizItem {get; private set;}
+        public IQuizItem CurrentQuizItem {get; private set;}
 
         public override void Initialize()
         {
