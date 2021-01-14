@@ -9,8 +9,8 @@
         
         <div class="flex flex-col">
             <div class="form-group flex flex-row space-x-2 items-center">
-                <label class="font-semibold flex-none" for="Name">Name</label>
-                <InputTextOnInput class="flex-auto" id="name" @bind-Value="Player.Name"/>           
+                <label class="font-semibold flex-none text-lg" for="Name">Name</label>
+                <InputTextOnInput class="min-w-0 md:flex-auto h-10 text-lg px-2" id="name" @bind-Value="Player.Name"/>           
             </div>
             <ValidationMessage For="() => Player.Name" />
         </div
