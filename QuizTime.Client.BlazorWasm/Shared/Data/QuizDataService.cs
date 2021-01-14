@@ -15,7 +15,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
         private static readonly SortedList<string, Player> _testplayers = new SortedList<string, Player>
         {
-            { "Mia", new Player (){ Name = "Alexander Hamilton", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
+            { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
             { "Izzy", new Player (){ Name = "Izzy", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Pink } },
             { "Jack", new Player (){ Name = "Jack", MinLevel = 5, MaxLevel = 8, Color = ThemeColor.Blue } },
             { "Mom", new Player (){ Name = "Mom", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Yellow } },
