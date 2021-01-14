@@ -25,13 +25,16 @@ namespace QuizTime.Api.Rest
                 {
                     builder.WithOrigins(
                         "https://0.0.0.0:5001", 
-                        "https://0.0.0.0:3000");
+                        "https://0.0.0.0:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .SetIsOriginAllowed(origin => true);
                 })
             );
 
             var app = builder.Build();
             app.UseCors();
-            app.Listen("https://0.0.0.0:3000");
+            app.Listen("http://0.0.0.0:3000");
             app.MapGet("/api/items", GetQuizItems);
             app.MapGet("/api/random/{id}", GetRandomQuizItem);
             
