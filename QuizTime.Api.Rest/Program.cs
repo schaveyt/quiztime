@@ -80,6 +80,11 @@ namespace QuizTime.Api.Rest
                     string line;
                     while ((line = await reader.ReadLineAsync()) != null)
                     {
+                        if (line[0] == '#')
+                        {
+                            continue;
+                        }
+                        
                         var cols = line.Split(',');
                         var answerIndex = 0;
                         var skillLevel = 0;
