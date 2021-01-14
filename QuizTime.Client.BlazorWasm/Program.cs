@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorState;
+using Blazored.Modal;
 using System.Reflection;
 using QuizTime.Client.BlazorWasm.Shared.Data;
 
@@ -31,17 +32,15 @@ namespace QuizTime.Client.BlazorWasm
 
         public static void ConfigureServices(IServiceCollection aServiceCollection)
         {
-
-            aServiceCollection.AddBlazorState
-            (
-              (aOptions) =>
-
+            aServiceCollection.AddBlazorState((aOptions) =>
                 aOptions.Assemblies =
                 new Assembly[]
                 {
                     typeof(Program).GetTypeInfo().Assembly,
                 }
             );
+
+            aServiceCollection.AddBlazoredModal();
         }
     }
 }
