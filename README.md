@@ -22,24 +22,45 @@ __Features:__
 
 - .NET 5 SDK
 
-  
-## Run the API
+## Install your dev certificates for your localhost
 
-The API operates at https://0.0.0.0:3000
+~~~
+dotnet dev-certs https --trust
+~~~
+
+## Operating In Your Home Network
+
+## Run the API
 
 ~~~bash
 cd QuizTime.Api.Rest
 dotnet watch run
 ~~~
 
+>NOTE: The API operates at https://0.0.0.0:3000. The `0.0.0.0` allows for any client ipaddr to be accepted.
+
 ## Run the Blazor Wasm Client
 
-The client operates at https://0.0.0.0:5001
+1. Edit QuizTime.Client.BlazorWasm/wwwroot/appsettings.json and replace the ipaddress with that of your hosting machine
 
-~~~bash
-cd QuizTime.Client.BlazorWasm
-dotnet watch run
-~~~
+    ~~~json
+    {
+        "apiUrl": "http://{your-machine-ipaddress}:3000"
+    }
+    ~~~
 
+1. Build and run the client
+    ~~~bash
+    cd QuizTime.Client.BlazorWasm
+    dotnet watch run
+    ~~~
+
+>NOTE: This spawns a local webserver to server the webapp to clients on your network at https://0.0.0.0:5001.
+
+## Play QuizTime!
+
+1. Open the web browser from any device on your network (i.e. Desktop, Laptop, Smartphone, Tablet, Chromebook, etc)
+2. Open the URL http://(the-ipaddress-of-the-machine-serving-the-webapp):5000 (e.g. http://192.168.0.12:5000)
+3. One should see the webapp loading and operational.
 
 
