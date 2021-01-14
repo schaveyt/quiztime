@@ -15,11 +15,11 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
         private static readonly SortedList<string, Player> _testplayers = new SortedList<string, Player>
         {
-            { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2 } },
-            { "Izzy", new Player (){ Name = "Izzy", MinLevel = 0, MaxLevel = 2 } },
-            { "Jack", new Player (){ Name = "Jack", MinLevel = 5, MaxLevel = 8 } },
-            { "Mom", new Player (){ Name = "Mom", MinLevel = 11, MaxLevel = 16 } },
-            { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16 } },
+            { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
+            { "Izzy", new Player (){ Name = "Izzy", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Pink } },
+            { "Jack", new Player (){ Name = "Jack", MinLevel = 5, MaxLevel = 8, Color = ThemeColor.Blue } },
+            { "Mom", new Player (){ Name = "Mom", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Yellow } },
+            { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Purple } },
         };
 
         public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
@@ -28,7 +28,6 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
             if (item == null)
             {
-                Console.WriteLine("Next item is null");
                 return new MultipleChoiceQuizItem("Error", new string[]{"error"}, 0);
             }
             

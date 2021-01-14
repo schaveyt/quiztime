@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using QuizTime.Shared.Data;
 using System.Text;
 using System;
-using Microsoft.AspNetCore.Components;
 
 namespace QuizTime.Client.BlazorWasm.Features.Game
 {
@@ -18,6 +17,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
 
     public enum PlayMode
     {
+        None,
         OnDeck,
         Question,
         Answer,
@@ -51,6 +51,10 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
                 {
                     case GameMode.Start:
                     case GameMode.NewGame:
+                        PlayMode = PlayMode.None;
+                        ThemeColor = SystemDefaultThemeColor;
+                        break;
+                    
                     case GameMode.Play:
                         PlayMode = PlayMode.OnDeck;
                         break;
@@ -90,6 +94,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
         public override void Initialize()
         {
             Mode = GameMode.Start;
+            ThemeColor = SystemDefaultThemeColor;
         }
 
         public int PlayerIndex(Player p)
@@ -125,7 +130,6 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
 
         private void DetermineNextPlayer()
         {
-            Console.WriteLine($"GotoNextPlayerDisabled: {GotoNextPlayerDisabled}");
             if (GotoNextPlayerDisabled)
             {
                 return;
@@ -152,6 +156,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
             }
 
             CurrentPlayer = Players[_currentPlayerIndex];
+            ThemeColor = CurrentPlayer.Color;
         }
 
 

@@ -19,7 +19,6 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
 
             public override Task<Unit> Handle(UpdateQuizQuestionAction aAction, CancellationToken aCancellationToken)
             {
-                Console.WriteLine("UpdateQuizQuestionHandler()...");
                 State.CurrentQuizItem = aAction.Value;
                 return Unit.Task;
             }

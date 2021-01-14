@@ -72,7 +72,6 @@ namespace QuizTime.Shared.Data
             if (raw_question.Count > 0)
             {
                 choices = raw_question.Slice(1);
-                Console.WriteLine($"choices: {string.Join(',', choices)}");
             }
 
             return new MultipleChoiceQuizItem

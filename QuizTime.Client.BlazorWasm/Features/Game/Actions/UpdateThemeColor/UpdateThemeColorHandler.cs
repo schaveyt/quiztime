@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using BlazorState;
 using MediatR;
 
-namespace QuizTime.Client.BlazorWasm.Features.Settings
+namespace QuizTime.Client.BlazorWasm.Features.Game
 {
-    public partial class SettingsState
+    public partial class GameState
     {
         public class UpdateThemeColorHandler : ActionHandler<UpdateThemeColorAction>
         {
@@ -15,7 +15,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Settings
 
             }
 
-            SettingsState State => Store.GetState<SettingsState>();
+            GameState State => Store.GetState<GameState>();
 
             public override Task<Unit> Handle(UpdateThemeColorAction aAction, CancellationToken aCancellationToken)
             {

@@ -1,5 +1,5 @@
 @using BlazorState
-@using QuizTime.Client.BlazorWasm.Features.Settings
+
 @using QuizTime.Client.BlazorWasm.Features.Game 
 @using QuizTime.Client.BlazorWasm.Shared.Data
 @using QuizTime.Client.BlazorWasm.Shared.UI.Composite
@@ -10,8 +10,8 @@
 <Header Title="On Deck" ShowCloseButton="false" />
 <ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
     <div class="flex flex-col justify-center items-center space-y-4">
-        <div class="text-4xl">Get Ready...</div>
-        <div class="text-6xl text-@(SettingsState.SecondaryColorString)-500">@GameState.CurrentPlayer.Name</div>
+        <div class="text-6xl text-@(SettingsState.ThemeColorString)-500">@GameState.CurrentPlayer.Name</div>
+        <div class="text-2xl">You're next!</div>
     </div>
     <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
         <div class="text-6xl">@timeRemaining</div>

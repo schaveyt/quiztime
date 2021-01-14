@@ -13,5 +13,7 @@ namespace QuizTime.Shared.Data
         public uint MinLevel {get; set;}
 
         public uint MaxLevel {get; set;}
+
+        public ThemeColor Color {get; set;}
     }
 }
