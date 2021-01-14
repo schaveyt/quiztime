@@ -20,7 +20,8 @@ namespace QuizTime.Client.BlazorWasm
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://0.0.0.0:3000/") });
+            var apiUrl = builder.Configuration["ApiUrl"];
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiUrl) });
             builder.Services.AddSingleton<QuizDataService, QuizDataService>();
 
             ConfigureServices(builder.Services);
