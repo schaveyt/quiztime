@@ -66,18 +66,19 @@ namespace QuizTime.Shared.Data
 
         public static implicit operator MultipleChoiceQuizItem(QuizItemDto i) 
         {
-            var raw_question = i.Question.Split('~');
+            var raw_question = new ArraySegment<string>(i.Question.Split('~'));
             ArraySegment<string> choices = null;
 
-            if (raw_question.Length > 0)
+            if (raw_question.Count > 0)
             {
-                choices = new ArraySegment<string>(raw_question, 1, raw_question.Length - 1);
+                choices = raw_question.Slice(1);
+                Console.WriteLine($"choices: {string.Join(',', choices)}");
             }
 
             return new MultipleChoiceQuizItem
             (
                 question: raw_question[0],
-                choices: choices.Array ?? new string[0],
+                choices: choices.ToArray(),
                 answerIndex: i.AnswerIndex
             );
         }

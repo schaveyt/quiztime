@@ -8,6 +8,8 @@ namespace QuizTime.Shared.Data
 
         public QuestionTypeEnum QuestionType { get; set; }
         
+        public int SkillLevel { get; set; }
+        
         public string Question { get; set; }
         
         public int AnswerIndex { get; set; }

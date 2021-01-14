@@ -25,6 +25,12 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
         public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
             var item = await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");
+
+            if (item == null)
+            {
+                Console.WriteLine("Next item is null");
+                return new MultipleChoiceQuizItem("Error", new string[]{"error"}, 0);
+            }
             
             if (item.QuestionType == QuestionTypeEnum.MultipleChoice)
             {
