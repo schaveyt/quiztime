@@ -35,17 +35,45 @@ namespace QuizTime.Api.Rest
             app.MapGet("/api/items", GetQuizItems);
             app.MapGet("/api/random/{id}", GetRandomQuizItem);
             
-            await InitializeSeedData();
-
-            //await StoreQuizItems(null);           
+            if (await InitializeSeedData() != 0)
+            {
+                return;
+            }         
 
             await app.RunAsync();
         }
 
-        static async Task InitializeSeedData()
+        static async Task<int> InitializeSeedData()
         {
+            var errors = false;
+            var csvFiles = Directory.EnumerateFiles("data", "*.csv");
+            foreach (var csvFile in csvFiles)
+            {
+                Console.WriteLine($"Loading data file: {csvFile}");
+                try
+                {
+                    await LoadFromFileCsv(csvFile);
+                }
+                catch (Exception e)
+                {
+                    errors = true;
+                    Console.WriteLine($"ERROR - 001 - Encountered exception while loading file: '{csvFile}':\nMessage: {e.Message}\nStacktrace:\n{e.StackTrace}");
+                }
+            }
+
+            if (errors)
+            {
+                return -1;
+            }
+
+            return 0;
+        }
+
+        static async Task LoadFromFileCsv(string csvFile)
+        {
+            var count = 0;
             var db = new QuizTimeDbContext();
-            using (FileStream fs = new FileStream("data-import.csv", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(csvFile, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new StreamReader(fs))
                 {
@@ -54,23 +82,29 @@ namespace QuizTime.Api.Rest
                     {
                         var cols = line.Split(',');
                         var answerIndex = 0;
+                        var skillLevel = 0;
+                        Int32.TryParse(cols[1], out skillLevel);
                         Int32.TryParse(cols[3], out answerIndex);
 
                         await db.QuizItems.AddAsync(
                             new QuizItemDto()
                             {
+                                SkillLevel = skillLevel,
                                 Question = cols[2],
                                 QuestionType =  cols[0][0] == 'M' ? QuestionTypeEnum.MultipleChoice : QuestionTypeEnum.Boolean,
                                 AnswerIndex = answerIndex
                             }
                         );
+
+                        count++;
                     }
                 }
             }
 
             await db.SaveChangesAsync();
-        }
 
+            Console.WriteLine($"Loaded data file: {csvFile} with {count} questions.");
+        }
 
         static async Task GetQuizItems(HttpContext http)
         {
@@ -112,7 +146,6 @@ namespace QuizTime.Api.Rest
             
         }
 
-        
     }
 
 }
