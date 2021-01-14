@@ -11,12 +11,31 @@
 <ContentArea CustomClass="py-4">
         @foreach (var player in Players)
         {
-            <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md">
-                <label class="flex flex-row items-center space-x-3">
-                    <input type="checkbox" checked="@(IsChecked(player))" @onchange="@(args => CheckboxCheckedHandler(player, (bool)args.Value))" 
-                        class="form-tick h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none">
-                    <span class="font-medium text-lg">@player.Name</span>
+            <div class="p-4 mb-2 max-w-xs mx-auto bg-white rounded-xl shadow-md flex flex-row items-center justify-between">
+                <label class="flex flex-row items-center justify-between space-x-3">
+                    <div class="flex flex-row items-center justify-between space-x-3">
+                        <input type="checkbox" checked="@(IsChecked(player))" @onchange="@(args => CheckboxCheckedHandler(player, (bool)args.Value))" 
+                            class="form-tick h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none">
+                        <span class="font-medium text-lg">@player.Name</span>
+                    </div>
                 </label>
+                <div class="flex flex-row space-x-1">
+                    <div class="w-8 h-8 rounded-full @(ColorSelectBorderStyle(player,ThemeColor.Pink)) hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row justify-center items-center">
+                        <div class="w-6 h-6 bg-pink-500 rounded-full" @onclick="(e => OnPlayerColorChanged(player, ThemeColor.Pink))"></div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full @(ColorSelectBorderStyle(player, ThemeColor.Blue)) hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row justify-center items-center">
+                        <div class="w-6 h-6 bg-blue-500 rounded-full" @onclick="(e => OnPlayerColorChanged(player, ThemeColor.Blue))"></div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full @(ColorSelectBorderStyle(player, ThemeColor.Green)) hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row justify-center items-center">
+                        <div class="w-6 h-6 bg-green-500 rounded-full" @onclick="(e => OnPlayerColorChanged(player, ThemeColor.Green))"></div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full @(ColorSelectBorderStyle(player, ThemeColor.Yellow)) hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row justify-center items-center">
+                        <div class="w-6 h-6 bg-yellow-500 rounded-full" @onclick="(e => OnPlayerColorChanged(player, ThemeColor.Yellow))"></div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full @(ColorSelectBorderStyle(player, ThemeColor.Purple)) hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row justify-center items-center">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full" @onclick="(e => OnPlayerColorChanged(player, ThemeColor.Purple))"></div>
+                    </div>
+                </div>
             </div>
         }
 
@@ -47,6 +66,16 @@
         Players = DataService.GetPlayers();
     }
 
+    protected string ColorSelectBorderStyle(Player player, ThemeColor color)
+    {
+        if (player.Color != color)
+        {
+            return String.Empty;
+        }
+        
+        return $"bg-{SettingsState.ThemeColorString}-300 shadow";
+    }
+
     private async Task OnClickPlay()
     {
         await Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Play });
@@ -72,5 +101,11 @@
         {
             Mediator.Send(new GameState.DeletePlayerAction { Value = player });
         }
+    }
+
+    private void OnPlayerColorChanged(Player player, ThemeColor color)
+    {
+        player.Color = color;
+        StateHasChanged();
     }
 }    
