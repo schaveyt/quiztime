@@ -45,6 +45,30 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
         
         public List<string> SuccessImages => _successImages;
 
+        private readonly List<string> _failImages = new List<string>()
+        {
+            "https://media.giphy.com/media/vPN3zK9dNL236/giphy.gif", // grumpy cat
+            "https://media.giphy.com/media/gnE4FFhtFoLKM/giphy.gif", // minion - eh nope
+            "https://media.giphy.com/media/d2ZcfODrNWlA5Gg0/giphy.gif", // scooby no
+            "https://media.giphy.com/media/26tPbBRTZ8CQvyxeU/giphy.gif", // pichachu no
+            "https://media.giphy.com/media/wofftnAdDtx4s/giphy.gif", // spongebob sand nope
+            "https://media.giphy.com/media/ji6zzUZwNIuLS/giphy.gif", // little girl face
+            "https://media.giphy.com/media/ToMjGpx9F5ktZw8qPUQ/giphy.gif", // office god no
+            "https://media.giphy.com/media/26tPtM8Arb1nyc1i0/giphy.gif", // home alone
+            "https://media.giphy.com/media/Sr9NHwRKlsD3unMK43/giphy.gif", // shrek donkey
+            "https://media.giphy.com/media/9Vb9gWFgb9a4zUXDSW/giphy.gif", // how about no
+            "https://media.giphy.com/media/15aGGXfSlat2dP6ohs/giphy.gif", // fish lips
+            "https://media.giphy.com/media/3o7TKpjt7qIbmRp2XC/giphy.gif", // californians
+            "https://media.giphy.com/media/OUwzqE4ZOk5Bm/giphy.gif", // hermonie
+            "https://media.giphy.com/media/i8tL4unehxmvu/giphy.gif", // malfoy
+            "https://media.giphy.com/media/l0HUeiukiyc3GOTuM/giphy.gif", //ginny
+            "https://media.giphy.com/media/Uw5esGjfVEDpC/giphy.gif", //hermonie 2
+            "https://media.giphy.com/media/12nfFCZA0vyrSw/giphy.gif", // ron
+
+        };
+
+        public List<string> FailImages => _failImages;
+
         public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel)
         {
             var item = await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");

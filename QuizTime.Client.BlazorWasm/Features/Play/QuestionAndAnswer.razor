@@ -98,9 +98,9 @@
         }
         else
         {
-            <div class="-mt-4 flex flex-col space-y-3">
+            <div class="-mt-4 flex flex-col items-center space-y-3">
 
-                <div class="w-48 h-32 rounded-md">
+                <div class="w-48 h-32 md:w-80 md:h-56 md:-mt-10 rounded-md">
                     <img src="@(QuizItem.AnswerIndex == UserAnswerIndex ? GetSuccessImage() : GetFailImage())" />
                 </div>
                 
@@ -188,7 +188,7 @@
 
     private string GetFailImage()
     {
-        var randomId = new Random().Next(0, DataService.SuccessImages.Count);
-        return DataService.SuccessImages[randomId];
+        var randomId = new Random().Next(0, DataService.FailImages.Count);
+        return DataService.FailImages[randomId];
     }
 }    
