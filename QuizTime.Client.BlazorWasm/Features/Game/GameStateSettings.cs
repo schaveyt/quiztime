@@ -5,7 +5,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
 {
     public partial class GameState
     {
-        public ThemeColor SystemDefaultThemeColor => ThemeColor.Blue;
+        public ThemeColor SystemDefaultThemeColor { get; private set; } = ThemeColor.Blue;
         public ThemeColor ThemeColor { get; private set; }
 
         public ThemeColor SecondaryColor

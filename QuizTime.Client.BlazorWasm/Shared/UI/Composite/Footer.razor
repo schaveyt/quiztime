@@ -36,6 +36,6 @@
 {
     private void OnThemeColorChanged(ThemeColor color)
     {
-        Mediator.Send(new GameState.UpdateThemeColorAction { Value = color });
+        Mediator.Send(new GameState.UpdateSystemThemeColorAction { Value = color });
     }
 }
