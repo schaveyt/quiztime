@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace QuizTime.Client.BlazorWasm.Shared.UI.Composite
 {
-    public class CountdownBase : SettingsStateComponentBase, IDisposable
+    public class CountdownBase : StateComponentBase, IDisposable
     {
         private System.Threading.Timer _timer;
 

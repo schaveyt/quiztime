@@ -5,12 +5,12 @@
 @using QuizTime.Client.BlazorWasm.Shared.UI.Composite
 @using QuizTime.Client.BlazorWasm.Shared.UI.Element
 @using QuizTime.Shared.Data
-@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <Header Title="On Deck" ShowCloseButton="false" />
 <ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
     <div class="flex flex-col justify-center items-center space-y-4">
-        <div class="text-6xl text-@(SettingsState.ThemeColorString)-500">@GameState.CurrentPlayer.Name</div>
+        <div class="text-6xl text-@(State.ThemeColorString)-500">@GameState.CurrentPlayer.Name</div>
         <div class="text-2xl">You're next!</div>
     </div>
     <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">

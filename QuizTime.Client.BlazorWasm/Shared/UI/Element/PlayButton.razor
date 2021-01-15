@@ -1,9 +1,9 @@
 @using BlazorState
-@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 @using QuizTime.Client.BlazorWasm.Shared.UI
 
-<div class="text-@(SettingsState.ThemeColorString)-500 flex flex-col cursor-pointer hover:text-@(SettingsState.ThemeColorString)-500 @CustomClass"
+<div class="text-@(State.ThemeColorString)-500 flex flex-col cursor-pointer hover:text-@(State.ThemeColorString)-500 @CustomClass"
     @onclick="@((args) => OnClickHandler(args))">
     <div>
         <svg class="@Dimensions stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

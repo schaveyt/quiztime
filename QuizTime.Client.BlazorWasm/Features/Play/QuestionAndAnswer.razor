@@ -3,7 +3,7 @@
 @using QuizTime.Client.BlazorWasm.Shared.UI.Element
 @using QuizTime.Shared.Data
 
-@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <Header Title="Question" ShowCloseButton="true" OnClose="OnClickClose"/>
 <ContentArea CustomClass="flex flex-row justify-center">
@@ -56,39 +56,39 @@
     </div>
 
     
-    <div class="flex flex-row justify-around items-center text-2xl">
+    <div class="flex flex-row justify-around items-center text-md md:text-2xl">
         @if (!ShowAnswer)
         {
-            <MainButton Text="Skip" OnClick="OnSkipHandlerAsync" Color="@(SettingsState.SecondaryColorString)"/>
+            <MainButton Text="Skip" OnClick="OnSkipHandlerAsync" Color="@(State.SecondaryColorString)"/>
 
             @switch (QuizItem.QuestionType)
             {
                 case QuestionTypeEnum.MultipleChoice:
                     @if (QuizItem.Question.Length > 1)
                     {
-                        <MainButton Text="a" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
+                        <MainButton Text="a" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
                     }
                     @if (QuizItem.Question.Length > 2)
                     {
-                        <MainButton Text="b" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
+                        <MainButton Text="b" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
                     }
                     @if (QuizItem.Question.Length > 3)
                     {
-                        <MainButton Text="c" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(2))"/>
+                        <MainButton Text="c" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(2))"/>
                     }
                     @if (QuizItem.Question.Length > 4)
                     {
-                        <MainButton Text="d" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(3))"/>
+                        <MainButton Text="d" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(3))"/>
                     }
                     
                     break;
                     
                 case QuestionTypeEnum.Boolean:
-                    <MainButton Text="True" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
-                    <MainButton Text="False" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
+                    <MainButton Text="True" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
+                    <MainButton Text="False" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
                     break;
                 case QuestionTypeEnum.Verbal:
-                    <MainButton Text="Do you have your answer?" Color="@(SettingsState.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
+                    <MainButton Text="Do you have your answer?" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
                     break;
                 
                 default:
@@ -97,7 +97,7 @@
         }
         else
         {
-            <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? SettingsState.TrinaryColorString : SettingsState.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
+            <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? State.TrinaryColorString : State.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -162,8 +162,8 @@
         if(ShowAnswer)
         {
             return index == QuizItem.AnswerIndex ? 
-                $"animate-pulse text-{SettingsState.TrinaryColorString}-600" : 
-                "text-{SettingsState.ThemeColorString}-100";
+                $"animate-pulse text-{State.TrinaryColorString}-600" : 
+                "text-{State.ThemeColorString}-100";
         }
         return null;        
     }

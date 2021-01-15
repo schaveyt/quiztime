@@ -1,4 +1,4 @@
-@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 
 <div id="admin-content-main" class="flex-auto flex flex-row">
@@ -36,7 +36,7 @@
 
             @foreach(var questionSet in QuestionSetList)
             {
-                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{SettingsState.ThemeColorString}-200" : "") hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row items-center">
+                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{State.ThemeColorString}-200" : "") hover:bg-@(State.ThemeColorString)-100 flex flex-row items-center">
                     <div class="pl-2 flex none flex flex-row items-center">
 
                         <input type="checkbox"
@@ -90,7 +90,7 @@
 
             @foreach(var questionSet in QuestionSetList)
             {
-                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{SettingsState.ThemeColorString}-200" : "") hover:bg-@(SettingsState.ThemeColorString)-100 flex flex-row items-center">
+                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{State.ThemeColorString}-200" : "") hover:bg-@(State.ThemeColorString)-100 flex flex-row items-center">
                     <div class="pl-2 flex none flex flex-row items-center">
                         <svg class="w-6 h-6 pl-2 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

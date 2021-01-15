@@ -1,6 +1,24 @@
 @page "/play"
 @using QuizTime.Client.BlazorWasm.Shared.UI
+@using QuizTime.Client.BlazorWasm.Features.Game 
+@using QuizTime.Client.BlazorWasm.Shared.Data
+@using BlazorState
+@inherits StateComponentBase
 
 <MainContainer>
     <Play/>
 </MainContainer>
+
+@code
+{
+    [Inject]
+    protected QuizDataService DataService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Mediator.Send(new GameState.AddPlayerAction 
+        { 
+            Value = DataService.GetPlayers().First()
+        });
+    }
+}#

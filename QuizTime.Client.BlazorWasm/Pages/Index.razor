@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inherits QuizTime.Client.BlazorWasm.Shared.UI.SettingsStateComponentBase
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 @using QuizTime.Client.BlazorWasm.Features.Game
 @using QuizTime.Client.BlazorWasm.Features.Start
@@ -27,8 +27,3 @@
 
 </MainContainer>
 
-@code
-{
-    private GameState State => GetState<GameState>();
-
-}
