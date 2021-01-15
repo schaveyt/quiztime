@@ -10,8 +10,8 @@
 <Header Title="On Deck" ShowCloseButton="false" />
 <ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
     <div class="flex flex-col justify-center items-center space-y-4">
-        <div class="text-6xl text-@(State.ThemeColorString)-500">@GameState.CurrentPlayer.Name</div>
-        <div class="text-2xl">You're next!</div>
+        <div class="text-6xl text-@(State.ThemeColorString)-500">@State.CurrentPlayer.Name</div>
+        <div class="text-4xl">You're next!</div>
     </div>
     <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
         <div class="text-6xl">@timeRemaining</div>
@@ -23,8 +23,6 @@
 
 @code
 {
-    private GameState GameState => GetState<GameState>();
-
     protected uint timeRemaining {get;set;}
 
     [Inject]
@@ -37,7 +35,7 @@
     {
         DataService.Http = Http;
         var nextQuestion = await DataService.GetNextQuizItem(
-            GameState.CurrentPlayer.MinLevel, GameState.CurrentPlayer.MaxLevel);
+            State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
         await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });
     }
 

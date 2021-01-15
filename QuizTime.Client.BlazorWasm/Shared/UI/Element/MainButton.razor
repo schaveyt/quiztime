@@ -3,7 +3,8 @@
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <button type="@ButtonType.ToLower()"
-    class="py-4 px-8 rounded-lg shadow bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400 @CustomClass" @onclick="@((args) => OnClickHandler(args))">@Text</button>
+    class="py-3 px-6 md:py-4 md:px-8 rounded-lg shadow bg-@(Color)-600 text-@(Color)-100 hover:bg-@(Color)-400 @CustomClass" 
+    @onclick="@((args) => OnClickHandler(args))">@Text</button>
 
 @code
 {

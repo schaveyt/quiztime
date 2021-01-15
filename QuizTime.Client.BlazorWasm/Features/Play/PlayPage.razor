@@ -16,9 +16,15 @@
 
     protected override void OnInitialized()
     {
+        var player = DataService.GetPlayers().First();
         Mediator.Send(new GameState.AddPlayerAction 
         { 
             Value = DataService.GetPlayers().First()
+        });
+
+        Mediator.Send(new GameState.UpdateGameModeAction
+        {
+            Value = GameMode.Play
         });
     }
 }#
