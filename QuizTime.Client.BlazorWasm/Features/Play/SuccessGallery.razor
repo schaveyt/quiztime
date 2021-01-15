@@ -1,0 +1,28 @@
+@page "/success"
+@using BlazorState
+
+@using QuizTime.Client.BlazorWasm.Features.Game 
+@using QuizTime.Client.BlazorWasm.Shared.Data
+@using QuizTime.Client.BlazorWasm.Shared.UI.Composite
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Shared.Data
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
+@inject QuizTime.Client.BlazorWasm.Shared.Data.QuizDataService DataService
+
+<Header Title="Success Images" ShowCloseButton="false" />
+<ContentArea>
+    <div class="flex-auto p-3 flex flex-wrap">
+        @foreach (var image in DataService.SuccessImages)
+        {
+            <div class="m-10 w-48 h-32 rounded-md bg-blue-100">
+                <img src="@image"/>
+            </div>
+        }
+    </div>
+</ContentArea> 
+
+@code
+{
+    
+}
+

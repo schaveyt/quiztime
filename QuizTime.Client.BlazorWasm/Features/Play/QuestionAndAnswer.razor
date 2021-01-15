@@ -2,6 +2,7 @@
 @using QuizTime.Client.BlazorWasm.Shared.UI.Composite
 @using QuizTime.Client.BlazorWasm.Shared.UI.Element
 @using QuizTime.Shared.Data
+@using QuizTime.Client.BlazorWasm.Shared.Data
 
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
@@ -97,20 +98,27 @@
         }
         else
         {
-            <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? State.TrinaryColorString : State.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                @if(QuizItem.AnswerIndex == UserAnswerIndex)
-                {
-                    <span>Correct!</span>
-                }
-                else
-                {
-                    <span>Incorrect</span>
-                }
-            </button>
+            <div class="-mt-4 flex flex-col space-y-3">
+
+                <div class="w-48 h-32 rounded-md">
+                    <img src="@(QuizItem.AnswerIndex == UserAnswerIndex ? GetSuccessImage() : GetFailImage())" />
+                </div>
+                
+                <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? State.TrinaryColorString : State.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    @if(QuizItem.AnswerIndex == UserAnswerIndex)
+                    {
+                        <span>Correct!</span>
+                    }
+                    else
+                    {
+                        <span>Incorrect</span>
+                    }
+                </button>
+            </div>
         }
     </div>
 
@@ -130,10 +138,14 @@
     private bool ShowAnswer {get; set;}
     private int UserAnswerIndex {get; set;}
 
+    private List<string> SuccessImages {get; set;}
+
+    [Inject]
+    protected QuizDataService DataService {get; set;}
+
     protected override void OnInitialized()
     {
         ShowAnswer = false;
-        base.OnInitialized();
     }
 
     private void OnClickClose()
@@ -151,7 +163,7 @@
         UserAnswerIndex = answerIndex;
         ShowAnswer = true;
         StateHasChanged();
-        await Task.Delay(2000);
+        await Task.Delay(4000);
         ShowAnswer = false;
         UserAnswerIndex = -1;
         await Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.OnDeck });
@@ -166,5 +178,17 @@
                 "text-{State.ThemeColorString}-100";
         }
         return null;        
+    }
+
+    private string GetSuccessImage()
+    {
+        var randomId = new Random().Next(0, DataService.SuccessImages.Count);
+        return DataService.SuccessImages[randomId];
+    }
+
+    private string GetFailImage()
+    {
+        var randomId = new Random().Next(0, DataService.SuccessImages.Count);
+        return DataService.SuccessImages[randomId];
     }
 }    
