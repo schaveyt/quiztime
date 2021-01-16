@@ -84,7 +84,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             }    
             else
             {
-                await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");
+                item = await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");
             }
 
             if (item == null)
