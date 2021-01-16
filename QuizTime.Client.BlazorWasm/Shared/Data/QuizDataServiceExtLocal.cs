@@ -14,12 +14,14 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
         {
             var items = await GetQuizItemsLocal(0, 0);
             var randomId = new Random().Next(0, items.Count);
-            await Task.Delay(1); // simulate delay
+            await Task.Delay(3000); // simulate delay
             return items[randomId];
         }
 
         private async Task<List<QuizItemDto>> GetQuizItemsLocal(uint minSkillLevel, uint maxSkillLevel)
         {
+            await Task.Delay(3000); // simulate delay
+
             var items = new List<QuizItemDto>()
             {
                 new MultipleChoiceQuizItem
