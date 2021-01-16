@@ -1,8 +1,13 @@
+@using QuizTime.Shared.Data
+@using Shared.Data
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
-
 <div id="admin-content-main" class="flex-auto flex flex-row">
+    
+    @* Add back once we have more time to implement question set
+
     <div id="admin-content-main-listview" class="flex-none w-64 flex flex-col">
+    
         <div id="admin-content-main-listview-header" class="flex-none h-14 border-b border-gray-400 shadow flex flex-row justify-between items-center">
             <div id="header-icon-group-left">
                 <div class="uppercase text-sm font-semibold pl-3">Question Sets</div>
@@ -53,72 +58,121 @@
 
 
 
-        </div>
+        </div>  
     </div>
+    *@
+
     <div id="admin-content-main-view-content" class="flex-auto flex flex-col border-l border-gray-400 shadow-xl">
         <div id="admin-content-main-details-header" class="flex-none h-14 border-b border-gray-400 shadow flex flex-row justify-between items-center">
             <div id="header-icon-group-left" class="flex flex-row items-center">
-                <div class="uppercase text-sm font-semibold pl-3">Question Sets Details:</div>
-                <div class="text-sm pl-3">1st Grade Science</div>
+                <div class="uppercase text-sm font-semibold pl-3">Quiz Items</div>
+                @* <div class="text-sm pl-3">1st Grade Science</div> *@
             </div>
+
             <div id="header-icon-group-right" class="flex flex-row space-x-2 items-center">
-                <div class="">
-                    <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
-                            d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                <!-- QuizItem Add Button -->
+                <div class="cursor-pointer hover:text-@(State.ThemeColorString)-900">
+                    <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <div class="">
-                    <svg class="w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24">
+                <!-- QuizItem Filter Button -->
+                @* <div class="">
+                    <svg class="w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
                             d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
-                </div>
-                <div class="pr-2">
-                    <svg class="w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
-                            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </div> *@
+                <!-- QuizItem Delete Button -->
+                <div class="pr-2 cursor-pointer hover:text-@(State.ThemeColorString)-900">
+                    <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                 </div>
 
             </div>
         </div>
-        <div id="admin-content-main-details-content" class="flex-auto border divide-y divide-gray-300 bg-gray-50">
+        <div id="admin-content-main-details-content" class="flex-auto flex flex-row bg-white">
+            <table class="flex-auto table-fixed">
+                <thead>
+                    <tr>
+                        <th class="w-12"></th>
+                        <th class="w-12"></th>
+                        <th class="w-1/12 px-4 py-2">Type</th>
+                        <th class="px-4 py-2">Question</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            @foreach(var questionSet in QuestionSetList)
-            {
-                <div id="item" class="h-10 @(questionSet.ShowDetails ? $"bg-{State.ThemeColorString}-200" : "") hover:bg-@(State.ThemeColorString)-100 flex flex-row items-center">
-                    <div class="pl-2 flex none flex flex-row items-center">
-                        <svg class="w-6 h-6 pl-2 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                    </div>
-                    <p class="pl-1 pr-1 truncate ...">@questionSet.Name</p>
-                </div>
-            }
+                @for(var i = 0; i < QuizItems.Count; i++)
+                {
+                    var quizItem = QuizItems[i];
+                    <tr class="@(SelectedItemIndices.Contains(i) ? $"bg-{State.ThemeColorString}-200" : "") border border-gray-100">
+                        <td class="pl-3 py-2">
+                            <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(i, (bool)args.Value))"
+                                class="mt-1 form-tick cursor-pointer h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"/>
+                        </td>
+                        <td class="px-2 py-2 cursor-pointer hover:text-@(State.ThemeColorString)-900">
+                            <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">                                    
+                                </path>
+                            </svg>
+                        </td>
+                        <td class="px-4 py-2">@quizItem.QuestionType</td>
+                        <td class="px-4 py-2">@quizItem.Question[0]</td>
+                    </tr>
+                }
+
+                </tbody>
 
 
-
+            </table>
         </div>
     </div>
 </div>
 
 @code
-{
-    public class QuestionSet
+{    
+
+    [Inject]
+    protected  QuizDataService DataService {get; set;}
+
+    protected List<IQuizItem> QuizItems {get; set;} = new List<IQuizItem>();
+
+    protected override void OnInitialized()
     {
-        public string Name {get; set;}
-        public bool ShowDetails {get; set;}
+        //
+        // TODO: Load the QuizItems from the server here
+        //
+        foreach(var item in DataService.QuizItemsLocal)
+        {
+            if (item.QuestionType == QuestionTypeEnum.MultipleChoice)
+            {
+                QuizItems.Add( (MultipleChoiceQuizItem)item );
+            }
+
+            if (item.QuestionType == QuestionTypeEnum.Boolean)
+            {
+                QuizItems.Add( (BooleanQuizItem)item );
+            }
+        }
     }
 
-    protected List<QuestionSet> QuestionSetList = new List<QuestionSet>()
+    public List<int> SelectedItemIndices {get; private set;} = new List<int>();
+    
+    private void SelectedItemChangedHanlder(int index, bool value)
     {
-        new QuestionSet {Name="Defualt"},
-        new QuestionSet {Name="1st Grade Science", ShowDetails=true},
-        new QuestionSet {Name="6th Grade Science"},
-    };
-}
+        if (value)
+        {
+            SelectedItemIndices.Add(index);
+        }
+        else
+        {
+            SelectedItemIndices.Remove(index);
+        }
+    }
+
+    
+}    
