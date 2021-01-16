@@ -32,7 +32,8 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                         "Oceanitic",
                         "Indian"
                     },
-                    answerIndex: 2
+                    answerIndex: 2,
+                    id: 1
                 ),
 
                 new MultipleChoiceQuizItem
@@ -43,31 +44,36 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                         "Paris",
                         "Berlin"
                     },
-                    answerIndex: 0
+                    answerIndex: 0,
+                    id: 2
                 ),
 
                 new BooleanQuizItem
                 (
                     question: "The largest U.S. state is Michigan.",
-                    answer: false
+                    answer: false,
+                    id: 3
                 ),
 
                 new BooleanQuizItem
                 (
                     question: "The largest U.S. state is Alaska.",
-                    answer: true
+                    answer: true,
+                    id: 4
                 ),
 
                 new BooleanQuizItem
                 (
                     question: "The Michigan state bird is the robin.",
-                    answer: true
+                    answer: true,
+                    id: 5
                 ),
 
                 new BooleanQuizItem
                 (
                     question: "Florida is full of crazy people.",
-                    answer: true
+                    answer: true,
+                    id: 6
                 ),
             };
 

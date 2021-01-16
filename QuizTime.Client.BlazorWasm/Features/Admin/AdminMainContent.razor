@@ -1,5 +1,6 @@
 @using QuizTime.Shared.Data
 @using Shared.Data
+@using QuizTime.Client.BlazorWasm.Features.Admin.EditItem
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <div id="admin-content-main" class="flex-auto flex flex-row">
@@ -113,18 +114,20 @@
                 {
                     var quizItem = QuizItems[i];
                     <tr class="@(SelectedItemIndices.Contains(i) ? $"bg-{State.ThemeColorString}-200" : "")">
-                        <td class="px-2 py-2 border">
+                        <td class="px-2 py-1 border">
                             <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(i, (bool)args.Value))"
                                 class="mt-1 h-5 w-5 form-tick cursor-pointer border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"/>
                         </td>
-                        <td class="px-2 py-2 border cursor-pointer text-gray-500 hover:text-@(State.ThemeColorString)-900">
-                            <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">                                    
-                                </path>
-                            </svg>
+                        <td class="px-2 py-1 border">
+                            <div class="cursor-pointer text-gray-500 hover:text-@(State.ThemeColorString)-900" @onclick=@(_ => OnEditQuizItemHandler(quizItem))>
+                                <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">                                    
+                                    </path>
+                                </svg>
+                            </div>
                         </td>
-                        <td class="px-4 py-2 border">@quizItem.QuestionType</td>
-                        <td class="px-4 py-2 border">@quizItem.Question[0]</td>
+                        <td class="px-4 py-1 border">@quizItem.QuestionType</td>
+                        <td class="px-4 py-1 border">@quizItem.Question[0]</td>
                     </tr>
                 }
 
@@ -144,10 +147,14 @@
     [Inject]
     protected  QuizDataService DataService {get; set;}
 
+    [CascadingParameter] 
+    public IModalService Modal { get; set; }
+
     protected List<IQuizItem> QuizItems {get; set;} = new List<IQuizItem>();
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("debug: fetching items");
         QuizItems = await DataService.GetQuizItems(Http, 0, 0);
     }
 
@@ -165,5 +172,28 @@
         }
     }
 
+    private async Task OnEditQuizItemHandler(IQuizItem item)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(EditQuizItem.QuizItem), item.Copy());
+
+        var options = new ModalOptions()
+        {
+            Class = $"blazored-modal bg-{State.ThemeColorString}-100 w-7/8 md:w-3/4",
+            HideCloseButton = true,
+            HideHeader = true,
+        };
+
+        var modal = Modal.Show<EditQuizItem>("Edit Quiz Item", parameters, options);
+        var modalResults = await modal.Result;
+
+        if (!modalResults.Cancelled)
+        {
+            var modifiedItem = modalResults.Data as IQuizItem;
+            
+            // TODO: Added put call back to server
+
+        }
+    }
     
 }    

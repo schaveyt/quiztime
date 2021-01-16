@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuizTime.Shared.Data
 {
@@ -15,6 +16,8 @@ namespace QuizTime.Shared.Data
         public string[] Question { get; }
         public int AnswerIndex { get; }
         public string AnswerString { get; }
+
+        public IQuizItem Copy();
     }
 
     public class MultipleChoiceQuizItem : IQuizItem
@@ -29,6 +32,11 @@ namespace QuizTime.Shared.Data
             _choices = choices;
             _answerIndex = answerIndex;
             Id = id;
+        }
+
+        public virtual IQuizItem Copy()
+        {   
+            return (IQuizItem) this.MemberwiseClone();
         }
 
         public virtual int Id { get; set; }
@@ -86,9 +94,14 @@ namespace QuizTime.Shared.Data
 
     public class BooleanQuizItem : MultipleChoiceQuizItem
     {
-        public BooleanQuizItem(string question, bool answer)
-            : base(question, new string[] { "True", "False" }, answer ? 0 : 1)
+        public BooleanQuizItem(string question, bool answer, int id = 0)
+            : base(question, new string[] { "True", "False" }, answer ? 0 : 1, id)
         {
+        }
+
+        public override IQuizItem Copy()
+        {   
+            return (IQuizItem) this.MemberwiseClone();
         }
 
         public override QuestionTypeEnum QuestionType => QuestionTypeEnum.Boolean;

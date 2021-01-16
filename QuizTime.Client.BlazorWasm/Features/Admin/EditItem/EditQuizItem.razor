@@ -1,0 +1,157 @@
+@using Blazored.Modal.Services
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Client.BlazorWasm.Features.Admin.EditItem
+@using QuizTime.Shared.Data
+
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
+
+<div class="flex flex-col divide-y divide-@(State.ThemeColorString)-500 text-@(State.ThemeColorString)-800">
+    <div class="pb-2 text-2xl flex-none font-semibold">Edit Quiz Item</div>
+    <EditForm Model=@Model OnValidSubmit=@OnValidSubmitHandler class="pt-3 flex-auto simple-form flex flex-col justify-between">
+        
+        <div id="edit-form-fields" class="flex flex-col space-y-3">
+            <DataAnnotationsValidator />
+
+            <!-- Question Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-col space-y-1">
+                    <label class="font-semibold flex-none text-lg" for="Model.Question">Question</label>
+                    <InputTextOnInput class="min-w-0 md:flex-auto h-8 text-lg px-2" id="Question" @bind-Value=Model.Question/>           
+                </div>
+                <ValidationMessage For="() => Model.Question" />
+            </div>
+
+             <!-- QuestionType Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.Question">Question Type</label>
+                    <InputSelect class="min-w-0 md:flex-auto h-8 text-lg px-2" id="QuestionType" @bind-Value=Model.QuestionType>
+                        <option value="MultipleChoice">MultipleChoice</option>
+                        <option value="Boolean">Boolean</option>
+                    </InputSelect>           
+                </div>
+                <ValidationMessage For="() => Model.QuestionType" />
+            </div>
+
+            <!-- Choice0 Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.Choice0">Choice 0</label>
+                    <InputTextOnInput class="min-w-0 md:flex-auto h-8 text-lg px-2" id="Choice0" @bind-Value=Model.Choice0/>           
+                </div>
+                <ValidationMessage For="() => Model.Choice0" />
+            </div>
+
+            <!-- Choice1 Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.Choice1">Choice 1</label>
+                    <InputTextOnInput class="min-w-0 md:flex-auto h-8 text-lg px-2" id="Choice1" @bind-Value=Model.Choice1/>           
+                </div>
+                <ValidationMessage For="() => Model.Choice1" />
+            </div>
+
+            <!-- Choice2 Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.Choice2">Choice 2</label>
+                    <InputTextOnInput class="min-w-0 md:flex-auto h-8 text-lg px-2" id="Choice2" @bind-Value=Model.Choice2/>           
+                </div>
+                <ValidationMessage For="() => Model.Choice2" />
+            </div>
+
+            <!-- Choice3 Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.Choice3">Choice 3</label>
+                    <InputTextOnInput class="min-w-0 md:flex-auto h-8 text-lg px-2" id="Choice3" @bind-Value=Model.Choice3/>           
+                </div>
+                <ValidationMessage For="() => Model.Choice3" />
+            </div>
+
+            <!-- Answer Index Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.AnswerIndex">Answer Index</label>
+                    <InputNumber class="min-w-0 md:flex-auto h-8 text-lg px-2" id="AnswerIndex" @bind-Value=Model.AnswerIndex/>           
+                </div>
+                <ValidationMessage For="() => Model.AnswerIndex" />
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-14 flex flex-row justify-end space-x-2 items-center">
+            <MainButton ButtonType="Submit" Text="Save" />
+            <MainButton Text="Cancel" OnClick="ModalInstance.CancelAsync" />
+        </div>
+        
+    </EditForm>
+</div>
+
+
+@code {
+
+    [CascadingParameter] 
+    BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter]
+    public IQuizItem QuizItem {get; set;}
+
+    private EditQuizItemModel Model {get; set;}
+
+    protected override void OnInitialized()
+    {
+        if (QuizItem == null)
+        {
+            throw new NullReferenceException("Parameter QuizItem is null.");
+        }
+
+        Model = new EditQuizItemModel()
+        {
+            QuestionType = QuizItem.QuestionType,
+            Question = QuizItem.Question[0],
+            Choice0 = QuizItem.Question.Length > 1 ? QuizItem.Question[1] : String.Empty,
+            Choice1 = QuizItem.Question.Length > 2 ? QuizItem.Question[2] : String.Empty,
+            Choice2 = QuizItem.Question.Length > 3 ? QuizItem.Question[3] : String.Empty,
+            Choice3 = QuizItem.Question.Length > 4 ? QuizItem.Question[4] : String.Empty,
+            AnswerIndex = QuizItem.AnswerIndex,
+        };
+    }
+
+    async Task OnValidSubmitHandler()
+    {
+        IQuizItem replacmenetItem = null;
+        var choices = new List<string>();
+        if (!String.IsNullOrWhiteSpace(Model.Choice0))
+        {
+            choices.Add(Model.Choice0);
+            if (!String.IsNullOrWhiteSpace(Model.Choice1))
+            {
+                choices.Add(Model.Choice1);
+                if (!String.IsNullOrWhiteSpace(Model.Choice2))
+                {
+                    choices.Add(Model.Choice2);
+                    if (!String.IsNullOrWhiteSpace(Model.Choice3))
+                    {
+                        choices.Add(Model.Choice3);
+                    }
+                }
+            }
+        }
+        if (Model.QuestionType == QuestionTypeEnum.MultipleChoice)
+        {
+            replacmenetItem = new MultipleChoiceQuizItem(
+                Model.Question,
+                choices.ToArray(),
+                Model.AnswerIndex );
+        }
+        else
+        {
+            replacmenetItem = new BooleanQuizItem(
+                Model.Question,
+                Model.AnswerIndex == 0 ? true : false );
+        }
+
+        await ModalInstance.CloseAsync(ModalResult.Ok<IQuizItem>(replacmenetItem));
+    }
+}
