@@ -33,8 +33,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        DataService.Http = Http;
-        var nextQuestion = await DataService.GetNextQuizItem(
+        var nextQuestion = await DataService.GetNextQuizItem(Http,
             State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
         await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });
     }

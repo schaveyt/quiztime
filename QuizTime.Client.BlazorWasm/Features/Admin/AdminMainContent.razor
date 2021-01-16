@@ -64,8 +64,11 @@
 
     <div id="admin-content-main-view-content" class="flex-auto flex flex-col border-l border-gray-400 shadow-xl">
         <div id="admin-content-main-details-header" class="flex-none h-10 border-b border-gray-400 shadow flex flex-row justify-between items-center">
-            <div id="header-icon-group-left" class="flex flex-row items-center">
+            <div id="header-icon-group-left" class="flex flex-row items-center space-x-3">
                 <div class="uppercase text-sm font-semibold pl-3">Quiz Items</div>
+                <div class="w-6 h-6 rounded-full bg-@(State.ThemeColorString)-500 text-white text-fine text-sm flex justify-center items-center">
+                    <div>@QuizItems?.Count</div>
+                </div>
                 @* <div class="text-sm pl-3">1st Grade Science</div> *@
             </div>
 
@@ -134,30 +137,18 @@
 </div>
 
 @code
-{    
+{   
+    [Inject]
+    protected HttpClient Http { get; set; }
 
     [Inject]
     protected  QuizDataService DataService {get; set;}
 
     protected List<IQuizItem> QuizItems {get; set;} = new List<IQuizItem>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        //
-        // TODO: Load the QuizItems from the server here
-        //
-        foreach(var item in DataService.QuizItemsLocal)
-        {
-            if (item.QuestionType == QuestionTypeEnum.MultipleChoice)
-            {
-                QuizItems.Add( (MultipleChoiceQuizItem)item );
-            }
-
-            if (item.QuestionType == QuestionTypeEnum.Boolean)
-            {
-                QuizItems.Add( (BooleanQuizItem)item );
-            }
-        }
+        QuizItems = await DataService.GetQuizItems(Http, 0, 0);
     }
 
     public List<int> SelectedItemIndices {get; private set;} = new List<int>();

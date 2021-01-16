@@ -10,9 +10,6 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 {
     public partial class QuizDataService
     {
-        [Inject]
-        public HttpClient Http { get; set; }
-
         private readonly SortedList<string, Player> _players = new SortedList<string, Player>
         {
             { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
@@ -74,17 +71,17 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
         public List<string> FailImages => _failImages;
 
-        public async Task<IQuizItem> GetNextQuizItem(uint minSkillLevel, uint maxSkillLevel, bool local = false)
+        public async Task<IQuizItem> GetNextQuizItem(HttpClient httpClient, uint minSkillLevel, uint maxSkillLevel, bool local = false)
         {
             QuizItemDto item = null;
             
             if (local)
             {
-                item = GetLocalRandomQuizItem();
+                item = await GetLocalRandomQuizItem();
             }    
             else
             {
-                item = await Http.GetFromJsonAsync<QuizItemDto>("api/random/0");
+                item = await httpClient.GetFromJsonAsync<QuizItemDto>("api/random/0");
             }
 
             if (item == null)
@@ -103,6 +100,48 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             }
 
             throw new Exception("Unsupported QuestionType encountered");
+         }
+
+         public async Task<List<IQuizItem>> GetQuizItems(HttpClient httpClient, uint minSkillLevel, uint maxSkillLevel, bool local = false)
+        {
+            List<QuizItemDto> items = null;
+            
+            if (local)
+            {
+                items = await GetQuizItemsLocal(minSkillLevel, maxSkillLevel);
+            }    
+            else
+            {
+                items = await httpClient.GetFromJsonAsync<List<QuizItemDto>>("api/items");
+            }
+
+            if (items == null)
+            {
+                return new List<IQuizItem>();
+            }
+            
+            var results = new List<IQuizItem>();
+
+            foreach (var item in items)
+            {
+                switch (item.QuestionType)
+                {
+                    case QuestionTypeEnum.MultipleChoice:
+                        results.Add( (MultipleChoiceQuizItem)item );
+                        break;
+
+                    case QuestionTypeEnum.Boolean:
+                        results.Add( (BooleanQuizItem)item );
+                        break;
+                    
+                    default:
+                        Console.WriteLine ($"warning: encountered unsupported QuestionType enum '{item.QuestionType}'");
+                        break;
+                }
+            }
+
+            return results;
+            
          }
 
     }
