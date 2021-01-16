@@ -67,9 +67,12 @@
         <div id="admin-content-main-details-header" class="flex-none h-10 border-b border-gray-400 shadow flex flex-row justify-between items-center">
             <div id="header-icon-group-left" class="flex flex-row items-center space-x-3">
                 <div class="uppercase text-sm font-semibold pl-3">Quiz Items</div>
-                <div class="w-6 h-6 rounded-full bg-@(State.ThemeColorString)-500 text-white text-fine text-sm flex justify-center items-center">
-                    <div>@QuizItems?.Count</div>
-                </div>
+                @if (!isLoading)
+                { 
+                    <div class="w-6 h-6 rounded-full bg-@(State.ThemeColorString)-500 text-white text-fine text-sm flex justify-center items-center">
+                        <div>@QuizItems?.Count</div>
+                    </div>
+                }
                 @* <div class="text-sm pl-3">1st Grade Science</div> *@
             </div>
 
@@ -98,43 +101,54 @@
 
             </div>
         </div>
-        <div id="admin-content-main-details-content" class="flex-auto flex flex-row bg-white">
-            <table class="flex-auto table-fixed">
-                <thead>
-                    <tr class="shadow-md">
-                        <th class="w-10"></th>
-                        <th class="w-10"></th>
-                        <th align="left" class="w-1/12 px-4 py-2 border border-gray-100">Type</th>
-                        <th align="left" class="px-4 py-2 border border-gray-100">Question</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div id="admin-content-main-details-content" class="flex-auto flex flex-row bg-gray-50">
+            
+            @if (isLoading)
+            {    
+                <div class="flex-auto flex flex-col justify-center items-center">
+                    <SpinKitWave/>
+                    <div class="-mt-8 text-lg text-gray-600">Loading...</div>
+                </div>
+            }
+            else
+            {
+                <table class="flex-auto table-fixed">
+                    <thead>
+                        <tr class="shadow-md">
+                            <th class="w-10"></th>
+                            <th class="w-10"></th>
+                            <th align="left" class="w-1/12 px-4 py-2 border border-gray-100">Type</th>
+                            <th align="left" class="px-4 py-2 border border-gray-100">Question</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                    @for(var i = 0; i < QuizItems.Count; i++)
+                    {
+                        var quizItem = QuizItems[i];
+                        <tr class="@(SelectedItemIndices.Contains(i) ? $"bg-{State.ThemeColorString}-200" : "")">
+                            <td class="px-2 py-1 border">
+                                <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(i, (bool)args.Value))"
+                                    class="mt-1 h-5 w-5 form-tick cursor-pointer border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"/>
+                            </td>
+                            <td class="px-2 py-1 border">
+                                <div class="cursor-pointer text-gray-500 hover:text-@(State.ThemeColorString)-900" @onclick=@(_ => OnEditQuizItemHandler(quizItem))>
+                                    <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">                                    
+                                        </path>
+                                    </svg>
+                                </div>
+                            </td>
+                            <td class="px-4 py-1 border">@quizItem.QuestionType</td>
+                            <td class="px-4 py-1 border">@quizItem.Question[0]</td>
+                        </tr>
+                    }
 
-                @for(var i = 0; i < QuizItems.Count; i++)
-                {
-                    var quizItem = QuizItems[i];
-                    <tr class="@(SelectedItemIndices.Contains(i) ? $"bg-{State.ThemeColorString}-200" : "")">
-                        <td class="px-2 py-1 border">
-                            <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(i, (bool)args.Value))"
-                                class="mt-1 h-5 w-5 form-tick cursor-pointer border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"/>
-                        </td>
-                        <td class="px-2 py-1 border">
-                            <div class="cursor-pointer text-gray-500 hover:text-@(State.ThemeColorString)-900" @onclick=@(_ => OnEditQuizItemHandler(quizItem))>
-                                <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">                                    
-                                    </path>
-                                </svg>
-                            </div>
-                        </td>
-                        <td class="px-4 py-1 border">@quizItem.QuestionType</td>
-                        <td class="px-4 py-1 border">@quizItem.Question[0]</td>
-                    </tr>
-                }
-
-                </tbody>
+                    </tbody>
 
 
-            </table>
+                </table>
+            }
         </div>
     </div>
 </div>
@@ -150,12 +164,17 @@
     [CascadingParameter] 
     public IModalService Modal { get; set; }
 
+    private bool isLoading;
+
     protected List<IQuizItem> QuizItems {get; set;} = new List<IQuizItem>();
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("debug: fetching items");
+        isLoading = true;
+        QuizItems = new List<IQuizItem>();
         QuizItems = await DataService.GetQuizItems(Http, 0, 0);
+        isLoading = false;
+        await Task.Delay(1);
     }
 
     public List<int> SelectedItemIndices {get; private set;} = new List<int>();
@@ -179,7 +198,7 @@
 
         var options = new ModalOptions()
         {
-            Class = $"blazored-modal bg-{State.ThemeColorString}-100 w-7/8 md:w-3/4",
+            Class = $"blazored-modal bg-gray-50 w-7/8 md:w-3/4",
             HideCloseButton = true,
             HideHeader = true,
         };
