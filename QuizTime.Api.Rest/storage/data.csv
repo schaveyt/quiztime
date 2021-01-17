@@ -13,7 +13,7 @@ MultipleChoice,0,Which superhero can climb up walls and buildings?~Slimedude~Spi
 MultipleChoice,0,“Stars and Stripes” is the nickname of the flag of which country?~Canada~Mexico~United States of America~Washington D.C,2
 MultipleChoice,0,Which planet in our Solar System is known for having a ring?~Mercury~Saturn~Earth~Orion,3
 MultipleChoice,0,Why do things fall when you drop them?~The Earth's spin~Because of gravity~,0
-MultipleChoice,0,What is the largest mammal in the world?~Elephant,0
+MultipleChoice,0,What is the largest mammal in the world?~Elephant~Giraffe~Blue Whale~Whale Shark,2
 MultipleChoice,0,How many colors are in a rainbow?~8~7~6~5,1
 MultipleChoice,0,In which capital city of Europe would you find the Eiffel Tower?~London~Paris~Madrid~Vienna,1
 MultipleChoice,0,What do you have to stick on an envelope?~A piece of pizza~A stamp~Your email address,1
@@ -42,7 +42,7 @@ Boolean,0,The Kite Brothers were the flying pioneers Orville and Wilbur?~True~Fa
 MultipleChoice,0,Which of these is not one of the seven dwarves in Snow White?~Sleepy~Silly~Happy~Dopey,1
 MultipleChoice,0,In what country were the Olympic Games invented?~Athens~Greece~Rome~Italy,1
 MultipleChoice,0,Who was the 16th president of the United States?~James Buchanan~Abraham Lincoln~Andrew Jackson~Ullyses Grant,1
-Boolean,0,Christopher Columbus discovers America.~True~False,1
+Boolean,0,Christopher Columbus discovered America.~True~False,1
 Boolean,0,The United States of America was the first democracy.~True~False,1
 MultipleChoice,0,The Statue of Liberty came from which country to the United States?~Italy~France~Greece,1
 MultipleChoice,0,Who painted the Mona Lisa?~Leonardo DaVinci~Michaelangelo~Mario & Luigi,0
