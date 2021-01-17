@@ -185,11 +185,11 @@
                 return QuizItems;
             }
 
-            @* int skillLevel;
+            int skillLevel;
             if (Int32.TryParse(SearchTerm, out skillLevel))
             {
-                return QuizItems?.Where(i => i. == skillLevel).ToList();
-            } *@
+                return QuizItems?.Where(i => i.SkillLevel == skillLevel).ToList();
+            }
 
             return QuizItems?.Where(i =>
                 i.Question[0].ToLower().Contains(SearchTerm.ToLower()) ||
