@@ -36,7 +36,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                     },
                     answerIndex: 2,
                     id: 1
-                ),
+                ).Dto(),
 
                 new MultipleChoiceQuizItem
                 (
@@ -48,35 +48,35 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                     },
                     answerIndex: 0,
                     id: 2
-                ),
+                ).Dto(),
 
                 new BooleanQuizItem
                 (
                     question: "The largest U.S. state is Michigan.",
                     answer: false,
                     id: 3
-                ),
+                ).Dto(),
 
                 new BooleanQuizItem
                 (
                     question: "The largest U.S. state is Alaska.",
                     answer: true,
                     id: 4
-                ),
+                ).Dto(),
 
                 new BooleanQuizItem
                 (
                     question: "The Michigan state bird is the robin.",
                     answer: true,
                     id: 5
-                ),
+                ).Dto(),
 
                 new BooleanQuizItem
                 (
                     question: "Florida is full of crazy people.",
                     answer: true,
                     id: 6
-                ),
+                ).Dto(),
             };
 
             await Task.Delay(1); // simulate delay

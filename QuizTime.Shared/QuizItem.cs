@@ -18,6 +18,8 @@ namespace QuizTime.Shared.Data
         public string AnswerString { get; }
 
         public IQuizItem Copy();
+
+        public QuizItemDto Dto();
     }
 
     public class MultipleChoiceQuizItem : IQuizItem
@@ -61,14 +63,14 @@ namespace QuizTime.Shared.Data
 
         public virtual string AnswerString => "";
 
-        public static implicit operator QuizItemDto(MultipleChoiceQuizItem i) 
+        public QuizItemDto Dto() 
         {
             return new QuizItemDto()
             {
-                Id = i.Id,
-                QuestionType = i.QuestionType,
-                Question = string.Join('~', i.Question),
-                AnswerIndex = i.AnswerIndex,
+                Id = Id,
+                QuestionType = QuestionType,
+                Question = string.Join('~', Question),
+                AnswerIndex = AnswerIndex,
             };
         }
 
@@ -86,7 +88,8 @@ namespace QuizTime.Shared.Data
             (
                 question: raw_question[0],
                 choices: choices.ToArray(),
-                answerIndex: i.AnswerIndex
+                answerIndex: i.AnswerIndex,
+                id: i.Id
             );
         }
 
@@ -113,7 +116,8 @@ namespace QuizTime.Shared.Data
             return new BooleanQuizItem
             (
                 question: raw_question[0],
-                answer: i.AnswerIndex == 0 ? true : false
+                answer: i.AnswerIndex == 0 ? true : false,
+                id: i.Id
             );
         }
 

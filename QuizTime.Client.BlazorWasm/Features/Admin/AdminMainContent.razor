@@ -168,13 +168,21 @@
 
     protected List<IQuizItem> QuizItems {get; set;} = new List<IQuizItem>();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         isLoading = true;
-        QuizItems = new List<IQuizItem>();
-        QuizItems = await DataService.GetQuizItems(Http, 0, 0);
-        isLoading = false;
-        await Task.Delay(1);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (isLoading)
+        {
+            isLoading = true;
+            QuizItems = new List<IQuizItem>();
+            QuizItems = await DataService.GetQuizItems(Http, 0, 0);
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
     public List<int> SelectedItemIndices {get; private set;} = new List<int>();
@@ -209,9 +217,24 @@
         if (!modalResults.Cancelled)
         {
             var modifiedItem = modalResults.Data as IQuizItem;
-            
-            // TODO: Added put call back to server
+            var dto = (QuizItemDto)modifiedItem.Dto();
 
+            try
+            {
+                var response = await Http.PutAsJsonAsync<QuizItemDto>($"/api/items/{modifiedItem.Id}", dto);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"PUT Error -  StatusCode:'{response.StatusCode}', Msg: {errorMessage}");
+                    return;
+                }
+
+                isLoading = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception: {e.Message}");
+            }
         }
     }
     

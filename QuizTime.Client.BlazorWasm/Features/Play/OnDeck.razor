@@ -61,11 +61,9 @@
 
     protected void OnTimeRemainingChanged(uint newTimeRemaining)
     {
-        Console.WriteLine("timer complete");
         timeRemaining = newTimeRemaining;
         if (timeRemaining == 0 && !isLoading)
         {
-            Console.WriteLine("change playmode to to question");
             Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.Question });
         }
     }

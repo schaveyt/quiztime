@@ -138,18 +138,21 @@
                 }
             }
         }
+
         if (Model.QuestionType == QuestionTypeEnum.MultipleChoice)
         {
             replacmenetItem = new MultipleChoiceQuizItem(
                 Model.Question,
                 choices.ToArray(),
-                Model.AnswerIndex );
+                Model.AnswerIndex,
+                id: QuizItem.Id);
         }
         else
         {
             replacmenetItem = new BooleanQuizItem(
                 Model.Question,
-                Model.AnswerIndex == 0 ? true : false );
+                Model.AnswerIndex == 0 ? true : false,
+                id: QuizItem.Id );
         }
 
         await ModalInstance.CloseAsync(ModalResult.Ok<IQuizItem>(replacmenetItem));
