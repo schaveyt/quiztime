@@ -17,6 +17,8 @@ namespace QuizTime.Shared.Data
         public int AnswerIndex { get; }
         public string AnswerString { get; }
 
+        public int SkillLevel { get; set; }
+
         public IQuizItem Copy();
 
         public QuizItemDto Dto();
@@ -33,14 +35,16 @@ namespace QuizTime.Shared.Data
             _question = String.Empty;
             _choices = new string[0];
             _answerIndex = 0;
+            SkillLevel = 0;
             Id = 0;
         }
 
-        public MultipleChoiceQuizItem(string question, string[] choices, int answerIndex, int id = 0)
+        public MultipleChoiceQuizItem(string question, string[] choices, int answerIndex, int skillLevel, int id = 0)
         {
             _question = question;
             _choices = choices;
             _answerIndex = answerIndex;
+            SkillLevel = skillLevel;
             Id = id;
         }
 
@@ -49,11 +53,13 @@ namespace QuizTime.Shared.Data
             return (IQuizItem) this.MemberwiseClone();
         }
 
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
 
         public virtual QuestionTypeEnum QuestionType => QuestionTypeEnum.MultipleChoice;
 
-        public virtual string[] Question
+        public int SkillLevel { get; set; }
+
+        public string[] Question
         {
             get
             {
@@ -67,9 +73,9 @@ namespace QuizTime.Shared.Data
             }
         }
 
-        public virtual int AnswerIndex => _answerIndex;
+        public int AnswerIndex => _answerIndex;
 
-        public virtual string AnswerString => "";
+        public string AnswerString => "";
 
         public QuizItemDto Dto() 
         {
@@ -78,6 +84,7 @@ namespace QuizTime.Shared.Data
                 Id = Id,
                 QuestionType = QuestionType,
                 Question = string.Join('~', Question),
+                SkillLevel = SkillLevel,
                 AnswerIndex = AnswerIndex,
             };
         }
@@ -97,6 +104,7 @@ namespace QuizTime.Shared.Data
                 question: raw_question[0],
                 choices: choices.ToArray(),
                 answerIndex: i.AnswerIndex,
+                skillLevel: i.SkillLevel,
                 id: i.Id
             );
         }
@@ -105,8 +113,8 @@ namespace QuizTime.Shared.Data
 
     public class BooleanQuizItem : MultipleChoiceQuizItem
     {
-        public BooleanQuizItem(string question, bool answer, int id = 0)
-            : base(question, new string[] { "True", "False" }, answer ? 0 : 1, id)
+        public BooleanQuizItem(string question, bool answer,  int skillLevel, int id = 0)
+            : base(question, new string[] { "True", "False" }, answer ? 0 : 1, skillLevel, id)
         {
         }
 
@@ -125,6 +133,7 @@ namespace QuizTime.Shared.Data
             (
                 question: raw_question[0],
                 answer: i.AnswerIndex == 0 ? true : false,
+                skillLevel: i.SkillLevel,
                 id: i.Id
             );
         }

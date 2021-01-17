@@ -25,6 +25,10 @@ namespace QuizTime.Client.BlazorWasm.Features.Admin.EditItem
         public string Choice3 {get; set;}
 
         [Required]
+        [Range(0, 12, ErrorMessage = "Value range is 0 to 12")]
+        public int SkillLevel {get; set;}
+
+        [Required]
         [Range(0, 3, ErrorMessage = "Value must be 0, 1, 2, or 3")]
         public int AnswerIndex {get; set;}
     }

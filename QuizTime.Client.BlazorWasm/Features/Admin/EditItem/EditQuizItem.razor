@@ -77,6 +77,15 @@
                 </div>
                 <ValidationMessage For="() => Model.AnswerIndex" />
             </div>
+
+            <!-- Skill Level Index Field -->
+            <div class="flex flex-col">
+                <div class="form-group flex flex-row space-x-2">
+                    <label class="font-semibold flex-none w-32 text-lg" for="Model.SkillLevel">Skill Level</label>
+                    <InputNumber class="min-w-0 md:flex-auto h-8 text-lg px-2" id="SkilLevel" @bind-Value=Model.SkillLevel/>           
+                </div>
+                <ValidationMessage For="() => Model.SkillLevel" />
+            </div>
         </div>
 
         <!-- Buttons -->
@@ -115,6 +124,7 @@
             Choice2 = QuizItem.Question.Length > 3 ? QuizItem.Question[3] : String.Empty,
             Choice3 = QuizItem.Question.Length > 4 ? QuizItem.Question[4] : String.Empty,
             AnswerIndex = QuizItem.AnswerIndex,
+            SkillLevel = QuizItem.SkillLevel,
         };
     }
 
@@ -145,6 +155,7 @@
                 Model.Question,
                 choices.ToArray(),
                 Model.AnswerIndex,
+                skillLevel: Model.SkillLevel,
                 id: QuizItem.Id);
         }
         else
@@ -152,6 +163,7 @@
             replacmenetItem = new BooleanQuizItem(
                 Model.Question,
                 Model.AnswerIndex == 0 ? true : false,
+                skillLevel: Model.SkillLevel,
                 id: QuizItem.Id );
         }
 

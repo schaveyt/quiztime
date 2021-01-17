@@ -98,7 +98,7 @@ namespace QuizTime.Api.Rest
                 foreach (var item in results)
                 {
                     await outputFile.WriteLineAsync(
-                        $"{item.QuestionType},{0},{item.Question},{item.AnswerIndex}");
+                        $"{item.QuestionType},{item.SkillLevel},{item.Question},{item.AnswerIndex}");
                 }
             }
 
