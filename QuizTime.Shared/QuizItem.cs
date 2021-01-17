@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuizTime.Shared.Data
 {
@@ -15,6 +16,10 @@ namespace QuizTime.Shared.Data
         public string[] Question { get; }
         public int AnswerIndex { get; }
         public string AnswerString { get; }
+
+        public IQuizItem Copy();
+
+        public QuizItemDto Dto();
     }
 
     public class MultipleChoiceQuizItem : IQuizItem
@@ -23,12 +28,25 @@ namespace QuizTime.Shared.Data
         string[] _choices;
         int _answerIndex;
 
+        public MultipleChoiceQuizItem()
+        {
+            _question = String.Empty;
+            _choices = new string[0];
+            _answerIndex = 0;
+            Id = 0;
+        }
+
         public MultipleChoiceQuizItem(string question, string[] choices, int answerIndex, int id = 0)
         {
             _question = question;
             _choices = choices;
             _answerIndex = answerIndex;
             Id = id;
+        }
+
+        public virtual IQuizItem Copy()
+        {   
+            return (IQuizItem) this.MemberwiseClone();
         }
 
         public virtual int Id { get; set; }
@@ -53,14 +71,14 @@ namespace QuizTime.Shared.Data
 
         public virtual string AnswerString => "";
 
-        public static implicit operator QuizItemDto(MultipleChoiceQuizItem i) 
+        public QuizItemDto Dto() 
         {
             return new QuizItemDto()
             {
-                Id = i.Id,
-                QuestionType = i.QuestionType,
-                Question = string.Join('~', i.Question),
-                AnswerIndex = i.AnswerIndex,
+                Id = Id,
+                QuestionType = QuestionType,
+                Question = string.Join('~', Question),
+                AnswerIndex = AnswerIndex,
             };
         }
 
@@ -78,7 +96,8 @@ namespace QuizTime.Shared.Data
             (
                 question: raw_question[0],
                 choices: choices.ToArray(),
-                answerIndex: i.AnswerIndex
+                answerIndex: i.AnswerIndex,
+                id: i.Id
             );
         }
 
@@ -86,9 +105,14 @@ namespace QuizTime.Shared.Data
 
     public class BooleanQuizItem : MultipleChoiceQuizItem
     {
-        public BooleanQuizItem(string question, bool answer)
-            : base(question, new string[] { "True", "False" }, answer ? 0 : 1)
+        public BooleanQuizItem(string question, bool answer, int id = 0)
+            : base(question, new string[] { "True", "False" }, answer ? 0 : 1, id)
         {
+        }
+
+        public override IQuizItem Copy()
+        {   
+            return (IQuizItem) this.MemberwiseClone();
         }
 
         public override QuestionTypeEnum QuestionType => QuestionTypeEnum.Boolean;
@@ -100,7 +124,8 @@ namespace QuizTime.Shared.Data
             return new BooleanQuizItem
             (
                 question: raw_question[0],
-                answer: i.AnswerIndex == 0 ? true : false
+                answer: i.AnswerIndex == 0 ? true : false,
+                id: i.Id
             );
         }
 

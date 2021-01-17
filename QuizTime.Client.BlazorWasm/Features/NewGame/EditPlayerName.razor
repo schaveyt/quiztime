@@ -4,13 +4,13 @@
 
 <div class="flex flex-col divide-y divide-@(State.ThemeColorString)-500 text-@(State.ThemeColorString)-800">
     <div class="pb-2 text-2xl flex-none font-semibold">Edit Player Name</div>
-    <EditForm Model="@Player" OnValidSubmit="@HandleValidSubmit" class="pt-3 flex-auto simple-form flex flex-col">
+    <EditForm Model=@Player OnValidSubmit=@OnValidSubmitHandler class="pt-3 flex-auto simple-form flex flex-col">
         <DataAnnotationsValidator />
         
         <div class="flex flex-col">
             <div class="form-group flex flex-row space-x-2 items-center">
                 <label class="font-semibold flex-none text-lg" for="Name">Name</label>
-                <InputTextOnInput class="min-w-0 md:flex-auto h-10 text-lg px-2" id="name" @bind-Value="Player.Name"/>           
+                <InputTextOnInput class="min-w-0 md:flex-auto h-10 text-lg px-2" id="name" @bind-Value=Player.Name/>           
             </div>
             <ValidationMessage For="() => Player.Name" />
         </div
@@ -30,7 +30,7 @@
     [Parameter]
     public Player Player { get; set; }
 
-    async Task HandleValidSubmit()
+    async Task OnValidSubmitHandler()
     {
         await ModalInstance.CloseAsync(ModalResult.Ok<Player>(Player));
     }

@@ -13,9 +13,18 @@
         <div class="text-6xl text-@(State.ThemeColorString)-500">@State.CurrentPlayer.Name</div>
         <div class="text-4xl">You're next!</div>
     </div>
+
     <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
         <div class="text-6xl">@timeRemaining</div>
     </Countdown>
+
+    @if (isLoading && timeRemaining == 0)
+    {
+        <div class="flex-auto flex flex-col justify-center items-center">
+            <SpinKitWave/>
+            <div class="-mt-8 text-lg text-gray-600">Still fetching next question...</div>
+        </div>
+    }
 
 </ContentArea> 
 
@@ -31,20 +40,29 @@
     [Inject]
     protected QuizDataService DataService { get; set; }
 
+    private bool isLoading;
+
     protected override async Task OnInitializedAsync()
     {
-        DataService.Http = Http;
-        var nextQuestion = await DataService.GetNextQuizItem(
+        isLoading = true;
+ 
+        var nextQuestion = await DataService.GetNextQuizItem(Http,
             State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
-        await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });
-    }
 
-    
+        isLoading = false;
+
+        await Mediator.Send(new GameState.UpdateQuizQuestionAction { Value = nextQuestion });
+
+        if (timeRemaining == 0)
+        {
+            await Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.Question });
+        }
+    }
 
     protected void OnTimeRemainingChanged(uint newTimeRemaining)
     {
         timeRemaining = newTimeRemaining;
-        if (timeRemaining == 0)
+        if (timeRemaining == 0 && !isLoading)
         {
             Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.Question });
         }
