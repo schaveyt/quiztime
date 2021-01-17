@@ -35,7 +35,6 @@ namespace QuizTime.Api.Rest
 
             if (dbItem == null)
             {
-                Console.WriteLine($"\nERROR - Unable to find quiz item with id {id}\n");
                 return NotFound();
             }
 
@@ -53,7 +52,7 @@ namespace QuizTime.Api.Rest
         }
 
         [HttpPost("/api/items")]
-        public async Task<ActionResult> CreateQuizItems(QuizItemDto dto)
+        public async Task<ActionResult> CreateQuizItem(QuizItemDto dto)
         {
             using var db = new QuizTimeDbContext();
             db.QuizItems.Add(dto);
@@ -76,7 +75,6 @@ namespace QuizTime.Api.Rest
 
             if (dbItem == null)
             {
-                Console.WriteLine($"\nERROR - Unable to find quiz item with id {id}\n");
                 return NotFound();
             }
 
@@ -86,6 +84,23 @@ namespace QuizTime.Api.Rest
             }
 
             dbItem.Update(dto);
+            await db.SaveChangesAsync();
+            await _apiDataService.Store();
+            return NoContent();
+        }
+
+        [HttpDelete("/api/items/{id}")]
+        public async Task<IActionResult> DeleteQuizItem(int id)
+        {
+            using var db = new QuizTimeDbContext();
+            var dbItem = await db.QuizItems.FindAsync(id);
+
+            if (dbItem == null)
+            {
+                return NotFound();
+            }
+
+            db.QuizItems.Remove(dbItem);
             await db.SaveChangesAsync();
             await _apiDataService.Store();
             return NoContent();

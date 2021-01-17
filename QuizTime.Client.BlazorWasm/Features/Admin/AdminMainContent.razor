@@ -92,7 +92,7 @@
                     </svg>
                 </div> *@
                 <!-- QuizItem Delete Button -->
-                <div class="pr-2 cursor-pointer hover:text-@(State.ThemeColorString)-900">
+                <div class="pr-2 cursor-pointer hover:text-@(State.ThemeColorString)-900" @onclick=OnDeleteQuizItemsHandler >
                     <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" >
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -125,10 +125,11 @@
                 
                     @for(var i = 0; i < QuizItems.Count; i++)
                     {
+                        var idx = i; // a copy of the idx must be
                         var quizItem = QuizItems[i];
                         <tr class="@(SelectedItemIndices.Contains(i) ? $"bg-{State.ThemeColorString}-200" : "")">
                             <td class="px-2 py-1 border">
-                                <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(i, (bool)args.Value))"
+                                <input type="checkbox" checked="@(SelectedItemIndices.Contains(i))" @onchange="@(args => SelectedItemChangedHanlder(idx, (bool)args.Value))"
                                     class="mt-1 h-5 w-5 form-tick cursor-pointer border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"/>
                             </td>
                             <td class="px-2 py-1 border">
@@ -258,4 +259,27 @@
         }
     }
     
+    private async Task OnDeleteQuizItemsHandler()
+    {
+        foreach (var index in SelectedItemIndices)
+        {
+            try
+            {
+                var response = await Http.DeleteAsync($"/api/items/{QuizItems[index].Id}");
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error -  StatusCode:'{response.StatusCode}', Msg: {errorMessage}");
+                    return;
+                }
+
+                isLoading = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception: {e.Message}");
+            }
+        }
+    }
 }    
