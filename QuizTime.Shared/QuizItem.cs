@@ -28,6 +28,14 @@ namespace QuizTime.Shared.Data
         string[] _choices;
         int _answerIndex;
 
+        public MultipleChoiceQuizItem()
+        {
+            _question = String.Empty;
+            _choices = new string[0];
+            _answerIndex = 0;
+            Id = 0;
+        }
+
         public MultipleChoiceQuizItem(string question, string[] choices, int answerIndex, int id = 0)
         {
             _question = question;
