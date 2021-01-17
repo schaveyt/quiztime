@@ -121,6 +121,7 @@
                             <th class="w-10"></th>
                             <th class="w-10"></th>
                             <th align="left" class="w-1/12 px-4 py-2 border border-gray-100">Type</th>
+                            <th align="left" class="w-1/12 px-4 py-2 border border-gray-100">Level</th>
                             <th align="left" class="px-4 py-2 border border-gray-100">Question</th>
                         </tr>
                     </thead>
@@ -144,6 +145,7 @@
                                 </div>
                             </td>
                             <td class="px-4 py-1 border">@quizItem.QuestionType</td>
+                            <td class="px-4 py-1 border">@quizItem.SkillLevel</td>
                             <td class="px-4 py-1 border">@quizItem.Question[0]</td>
                         </tr>
                     }
@@ -209,7 +211,7 @@
         {
             isLoading = true;
             QuizItems = new List<IQuizItem>();
-            QuizItems = await DataService.GetQuizItems(Http, 0, 0);
+            QuizItems = await DataService.GetQuizItems(Http, 0, 12);
             isLoading = false;
             StateHasChanged();
         }

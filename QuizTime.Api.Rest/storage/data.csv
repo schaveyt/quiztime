@@ -1,4 +1,4 @@
-MultipleChoice,0,Which of these is not an ocean?~Pacific~Atlantic~Oceanitic~Indian,2
+MultipleChoice,2,Which of these is not an ocean?~Pacific~Atlantic~Oceanitic~Indian,2
 MultipleChoice,0,What is the captial of France?~Paris~Berlin,0
 Boolean,0,The largest U.S. state is Michigan.~True~False,1
 Boolean,0,The largest U.S. state is Alaska.~True~False,0

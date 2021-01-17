@@ -35,6 +35,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                         "Indian"
                     },
                     answerIndex: 2,
+                    skillLevel: 1,
                     id: 1
                 ).Dto(),
 
@@ -47,6 +48,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                         "Berlin"
                     },
                     answerIndex: 0,
+                    skillLevel: 1,
                     id: 2
                 ).Dto(),
 
@@ -54,6 +56,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                 (
                     question: "The largest U.S. state is Michigan.",
                     answer: false,
+                    skillLevel: 1,
                     id: 3
                 ).Dto(),
 
@@ -61,6 +64,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                 (
                     question: "The largest U.S. state is Alaska.",
                     answer: true,
+                    skillLevel: 1,
                     id: 4
                 ).Dto(),
 
@@ -68,6 +72,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                 (
                     question: "The Michigan state bird is the robin.",
                     answer: true,
+                    skillLevel: 1,
                     id: 5
                 ).Dto(),
 
@@ -75,6 +80,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
                 (
                     question: "Florida is full of crazy people.",
                     answer: true,
+                    skillLevel: 1,
                     id: 6
                 ).Dto(),
             };

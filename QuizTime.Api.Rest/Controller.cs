@@ -83,7 +83,10 @@ namespace QuizTime.Api.Rest
                 return StatusCode(500, "The item transfered is null");
             }
 
+            Console.WriteLine($"dto:       {dto}");
+            Console.WriteLine($"db before: {dbItem}");
             dbItem.Update(dto);
+            Console.WriteLine($"db after:  {dbItem}");
             await db.SaveChangesAsync();
             await _apiDataService.Store();
             return NoContent();

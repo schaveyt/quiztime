@@ -86,7 +86,7 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
             if (item == null)
             {
-                return new MultipleChoiceQuizItem("Error", new string[]{"error"}, 0);
+                return new MultipleChoiceQuizItem("Error", new string[]{"error"}, 0, 0);
             }
             
             if (item.QuestionType == QuestionTypeEnum.MultipleChoice)

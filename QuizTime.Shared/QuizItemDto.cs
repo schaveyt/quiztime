@@ -30,7 +30,7 @@ namespace QuizTime.Shared.Data
 
         public override string ToString()
         {
-            return $"id={Id}, QuestionType={QuestionType}, Question:={Question??"null"}, AnswerIndex={AnswerIndex}";
+            return $"id={Id}, QuestionType={QuestionType}, Question:={Question??"null"}, SkillLevel={SkillLevel}, AnswerIndex={AnswerIndex}";
         }
     }
 }
