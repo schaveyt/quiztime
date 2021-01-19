@@ -54,7 +54,6 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
                     case GameMode.NewGame:
                         PlayMode = PlayMode.None;
                         ThemeColor = SystemDefaultThemeColor;
-                        QuestionSetIds = null;
                         break;
                     
                     case GameMode.Play:

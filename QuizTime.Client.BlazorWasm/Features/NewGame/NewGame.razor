@@ -8,7 +8,8 @@
 @using QuizTime.Shared.Data
 
 <Header Title="New Game" ShowCloseButton="true" OnClose="OnCloseHandler"/>
-<ContentArea CustomClass="py-4">
+<ContentArea CustomClass="py-4 flex flex-col justify-between items-center">
+        <div>
         @foreach (var player in Players)
         {
             <div class="p-4 mb-2 max-w-sm md:max-w-md mx-auto bg-white rounded-xl shadow-md flex flex-row items-center justify-between">
@@ -45,11 +46,24 @@
                 </div>
             </div>
         }
+        </div>
 
         @if(GameState.Players.Count > 0)
         {
             <div class="p-4 mb-2 max-w-xs mx-auto flex flex-row justify-center items-center">
                 <PlayButton Size="Shared.UI.Size.Small" OnClick="OnClickPlay"/>
+            </div>
+        }
+
+        @if(GameState.QuestionSetIds != null)
+        {
+            <div>
+                <div class="p-4 mb-2 max-w-xs mx-auto text-2xl flex flex-row justify-center items-center">
+                    <strong>@GameState.QuestionSetIds.Count</strong><span>&nbsp; questions left</span>
+                </div>
+                <div class="p-4 mb-2 max-w-xs mx-auto flex flex-row justify-center items-center">
+                    <MainButton Text="Reset Questions" OnClick="@ResetQuestionSetHandler" />
+                </div>
             </div>
         }
 
@@ -140,5 +154,10 @@
             await Mediator.Send(new GameState.UpdatePlayerAction { Value = modifiedPlayer });
         }
 
+    }
+
+    private async Task ResetQuestionSetHandler()
+    {
+        await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = null });
     }
 }    
