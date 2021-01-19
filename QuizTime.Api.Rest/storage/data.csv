@@ -11,8 +11,8 @@ MultipleChoice,0,Name Batman’s crime fighting partner?~Sharkboy~Wilfred~Robin,
 MultipleChoice,0,How many sides does a triangle have?~3~4~5~6,0
 MultipleChoice,0,Which superhero can climb up walls and buildings?~Slimedude~Spiderman~Icemand~Wonderwoman,1
 MultipleChoice,0,“Stars and Stripes” is the nickname of the flag of which country?~Canada~Mexico~United States of America~Washington D.C,2
-MultipleChoice,0,Which planet in our Solar System is known for having a ring?~Mercury~Saturn~Earth~Orion,3
-MultipleChoice,0,Why do things fall when you drop them?~The Earth's spin~Because of gravity~,0
+MultipleChoice,0,Which planet in our Solar System is known for having a ring?~Mercury~Saturn~Earth~Orion,1
+MultipleChoice,0,Why do things fall when you drop them?~The Earth's spin~Because of gravity~Moon's Tide,1
 MultipleChoice,0,What is the largest mammal in the world?~Elephant~Giraffe~Blue Whale~Whale Shark,2
 MultipleChoice,0,How many colors are in a rainbow?~8~7~6~5,1
 MultipleChoice,0,In which capital city of Europe would you find the Eiffel Tower?~London~Paris~Madrid~Vienna,1
@@ -20,11 +20,11 @@ MultipleChoice,0,What do you have to stick on an envelope?~A piece of pizza~A st
 MultipleChoice,0,Who was the first American president?~George Washington~Greg Washington~Thomas Jefferson,0
 MultipleChoice,0,Which country is home to the kangaroo?~Australia~Austria~South Africa~India,0
 MultipleChoice,0,What is the opposite of ‘cheap’?~Chirp~Expensive~Not Expensive,1
-Boolean,0,The Giraffe is the tallest in the world?~True~False,0
+Boolean,0,The Giraffe is the animal tallest in the world?~True~False,0
 MultipleChoice,0,Which singing voice is the highest pitch?~Soprano~Tenor~Baritone,0
 MultipleChoice,0,A scientist who studies rocks is called a what?~A rockologist~A geographer~A geologist,2
 MultipleChoice,0,Who was the first man to step on the moon?~Buzz Aldren~Neil Armstrong~Yuri Gagari~Buzz Lightyear,1
-Boolean,0,Harry Potter used his Vanishing Spell to make him invisible.~True~False,0
+Boolean,0,Harry Potter used his Vanishing Spell to make him invisible.~True~False,1
 Boolean,0,In sports; MVP means Most Valuable Player?~True~False,0
 MultipleChoice,0,If you suffer from arachnophobia which animal are you scared of?~Bugs~Snakes~Spiders~Dumb People,2
 MultipleChoice,0,What food do pandas eat?~Leafy grass~Bamboo~Salmon~Blueberries,1
@@ -46,19 +46,19 @@ Boolean,0,Christopher Columbus discovered America.~True~False,1
 Boolean,0,The United States of America was the first democracy.~True~False,1
 MultipleChoice,0,The Statue of Liberty came from which country to the United States?~Italy~France~Greece,1
 MultipleChoice,0,Who painted the Mona Lisa?~Leonardo DaVinci~Michaelangelo~Mario & Luigi,0
-MultipleChoice,0,What are cartoon solve mysteries together and are rewarded with Scooby Snacks?~Captain Caveman~Power Rangers~Scooby Doo~The Smurfs,2
+MultipleChoice,0,What cartoon has kids solve mysteries with rewards of Scooby Snacks?~Captain Caveman~Power Rangers~Scooby Doo~The Smurfs,2
 Boolean,0,The Gigantic was the famous ocean liner sank on her first voyage in 1912?~True~False,1
 MultipleChoice,0,Which movie is Prince Charming from?~Snow White~Sleeping Beauty~Cinderella,2
-Boolean,0,Justin Bieber is grew up in Texas?~True~False,1
+Boolean,0,Justin Bieber grew up in Texas?~True~False,1
 Boolean,0,Big Ben is the nickname for the bell of the clock at the Palace of Westminster in London?~True~False,0
 MultipleChoice,0,What do you get when you boil water?~Smoke~Steam~Ice Cubes,1
 MultipleChoice,0,What is the name of Mickey Mouse’s pet dog?~Pluto~Goofy~Bart,0
 MultipleChoice,0,In what movie will you find characters who are looking for a brain; a heart; and courage?~The Three Amigos~Twister~The Wizard of Oz,2
-MultipleChoice,0,What movie is Princess Fiona from?~Shrek~Tangled~Frozen~Princess and the Frog,1
+MultipleChoice,0,What movie is Princess Fiona from?~Shrek~Tangled~Frozen~Princess and the Frog,0
 MultipleChoice,0,What is the largest continent?~Africa~Asia~North America~Antiartica,1
 MultipleChoice,0,What is the tallest mountain in the world?~Mount Everest~Mount Fuji~Mountain Dew~Mt. Highest,0
 Boolean,0,There are five Great Lakes.~True~False,0
-Boolean,0,The Equator the imaginary line called that connects the north and south pole?~True~False,1
+Boolean,0,The Equator is the imaginary line that connects the north and south pole?~True~False,1
 MultipleChoice,0,What kind of dried fruit come from plum tree?~prunes~dates~raisins~apricots,0
 Boolean,0,The Gulf of Mexico is located to the south of Mexico?~True~False,1
 MultipleChoice,0,What is the hardest natural substance?~Granite~Steel~Concrete~Diamond,3
