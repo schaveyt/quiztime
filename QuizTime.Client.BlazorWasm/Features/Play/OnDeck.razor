@@ -8,13 +8,20 @@
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <Header Title="On Deck" ShowCloseButton="false" />
-<ContentArea CustomClass="flex flex-col justify-around items-center space-y-12">
+<ContentArea CustomClass="flex flex-col justify-around items-center space-y-8">
     <div class="flex flex-col justify-center items-center space-y-4">
         <div class="text-6xl text-@(State.ThemeColorString)-500">@State.CurrentPlayer.Name</div>
         <div class="text-4xl">You're next!</div>
     </div>
 
-    <Countdown Duration=3 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
+    @if (State.QuestionSetIds != null)
+    {
+        <div class="flex flex-col justify-center items-center space-y-4">
+            <div class="text-2xl text-@(State.ThemeColorString)-500"><strong>@State.QuestionSetIds.Count</strong> questions left</div>
+        </div>
+    }
+
+    <Countdown Duration=4 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
         <div class="text-6xl">@timeRemaining</div>
     </Countdown>
 
@@ -45,9 +52,19 @@
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
+
+        // if needed, load the ids of the quizitems used for this play session
+        //
+        if (State.QuestionSetIds == null)
+        {
+            var itemIds = await DataService.GetQuizItemsIds(
+                Http, State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
+            await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = itemIds });
+        }
  
-        var nextQuestion = await DataService.GetNextQuizItem(Http,
-            State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
+        Console.WriteLine($"QuestionSetId.Count: {State.QuestionSetIds.Count}");
+        var randomId = new Random().Next(0, State.QuestionSetIds.Count);
+        var nextQuestion = await DataService.GetQuizItemById(Http, State.QuestionSetIds[randomId]);
 
         isLoading = false;
 

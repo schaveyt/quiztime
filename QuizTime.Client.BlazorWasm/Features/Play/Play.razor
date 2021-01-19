@@ -5,7 +5,7 @@
 @using QuizTime.Shared.Data
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
-@switch (GameState.PlayMode)
+@switch (State.PlayMode)
 {
     case PlayMode.OnDeck:
         <OnDeck/>
@@ -17,8 +17,3 @@
         break;
 }
 
-@code
-{
-    private GameState GameState => GetState<GameState>();
-
-}

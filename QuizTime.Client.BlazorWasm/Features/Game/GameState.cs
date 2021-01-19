@@ -47,6 +47,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
             } 
             private set
             {
+                //Console.WriteLine($"GameState.Mode being set to {value}");
                 switch(value)
                 {
                     case GameMode.Start:
@@ -72,6 +73,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
             } 
             private set
             {
+                //Console.WriteLine($"GameState.PlayMode being set to {value}");
                 switch(value)
                 {
                     case PlayMode.OnDeck:
@@ -88,6 +90,8 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
         protected bool GotoNextPlayerDisabled {get; set;}
 
         public List<Player> Players => _players;
+
+        public List<int> QuestionSetIds {get; private set;}
 
         public IQuizItem CurrentQuizItem {get; private set;}
 

@@ -71,24 +71,17 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
 
         public List<string> FailImages => _failImages;
 
-        public async Task<IQuizItem> GetNextQuizItem(HttpClient httpClient, uint minSkillLevel, uint maxSkillLevel, bool local = false)
+        public async Task<IQuizItem> GetQuizItemById(HttpClient httpClient, int itemId)
         {
             QuizItemDto item = null;
 
             try
             {
-                if (local)
-                {
-                    item = await GetLocalRandomQuizItem();
-                }    
-                else
-                {
-                    item = await httpClient.GetFromJsonAsync<QuizItemDto>("api/random/0");
-                }
+                item = await httpClient.GetFromJsonAsync<QuizItemDto>($"api/items/{itemId}");
             }
             catch(Exception e)
             {
-                Console.WriteLine($"ERROR: 84349 - Exception when getting next quiz item.\nException Msg: {e.Message}");
+                Console.WriteLine($"ERROR: 84340 - Exception when getting next quiz item.\nException Msg: {e.Message}");
             }
 
             if (item == null)
@@ -109,24 +102,18 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             throw new Exception("Unsupported QuestionType encountered");
         }
 
-        public async Task<List<IQuizItem>> GetQuizItems(HttpClient httpClient, uint minSkillLevel, uint maxSkillLevel, bool local = false)
+        public async Task<List<IQuizItem>> GetQuizItems(HttpClient httpClient, uint minSkillLevel,
+            uint maxSkillLevel, bool local = false)
         {
             List<QuizItemDto> items = null;
             
             try
             {
-                if (local)
-                {
-                    items = await GetQuizItemsLocal(minSkillLevel, maxSkillLevel);
-                }    
-                else
-                {
-                    items = await httpClient.GetFromJsonAsync<List<QuizItemDto>>("api/items");
-                }
+                items = await httpClient.GetFromJsonAsync<List<QuizItemDto>>("api/items");
             }
             catch(Exception e)
             {
-                Console.WriteLine($"ERROR: 84349 - Exception when getting next quiz item.\nException Msg: {e.Message}");
+                Console.WriteLine($"ERROR: 84341 - Exception when getting next quiz item.\nException Msg: {e.Message}");
             }
 
             if (items == null)
@@ -158,6 +145,27 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             
          }
 
+        public async Task<List<int>> GetQuizItemsIds(HttpClient httpClient, uint minSkillLevel,
+            uint maxSkillLevel, bool local = false)
+        {
+            List<int> items = null;
+            
+            try
+            {
+                items = await httpClient.GetFromJsonAsync<List<int>>("api/itemids");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"ERROR: 84342 - Exception when getting next quiz item.\nException Msg: {e.Message}");
+            }
+
+            if (items == null)
+            {
+                return new List<int>();
+            }
+            
+            return items;
+         }
     }
 
 }
