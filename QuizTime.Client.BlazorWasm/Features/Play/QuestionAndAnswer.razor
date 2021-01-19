@@ -10,35 +10,57 @@
 <ContentArea CustomClass="flex flex-row justify-center">
 
 <div class="flex flex-col pt-3 pb-5 space-y-3">
-    <div class="flex-auto text-xl md:text-2xl px-6 md:px-48 flex flex-col space-y-4">
+    <div class="flex-auto text-xl md:text-2xl px-6 md:px-48 flex flex-col space-y-4 item-center">
         <div class="flex flex-row justify-center item-center">
             <h2 class="text-4xl md:text-5xl">@Player.Name</h2>
         </div>
-        <div>
-            <strong class="text-2xl md:text-3xl">@QuizItem.Question[0]</strong>
-            <ol class="pt-3 md:px-16">
-                @for (var i = 1; i < 5; i++)
-                {
-                    var zeroBasedChoiceIdx = i - 1;
-                    @if (i < QuizItem.Question.Length)
+        
+        @if (!ShowAnswer)
+        {
+            <div>
+                <strong class="text-2xl md:text-3xl">@QuizItem.Question[0]</strong>
+                <ol class="pt-3 md:px-16">
+                    @for (var i = 1; i < 5; i++)
                     {
-                        <li class="@(ChoiceOptionStyle(zeroBasedChoiceIdx)) py-3">
-                            <button 
-                                class="w-14 h-10 pb-1
-                                rounded shadow
-                                text-md text-center
-                                bg-@(GameState.ThemeColorString)-600 
-                                text-@(GameState.ThemeColorString)-100 
-                                hover:bg-@(GameState.ThemeColorString)-400" 
-                                @onclick="@(e => OnAnswerHandlerAsync(zeroBasedChoiceIdx))">@IndexToLetterMap[i]</button>
-                            <span class="pl-1">@QuizItem.Question[i]</span>
-                        </li>
+                        var zeroBasedChoiceIdx = i - 1;
+                        @if (i < QuizItem.Question.Length)
+                        {
+                            <li class="@(ChoiceOptionStyle(zeroBasedChoiceIdx)) py-3">
+                                <button 
+                                    class="w-14 h-10 pb-1
+                                    rounded shadow
+                                    text-md text-center
+                                    bg-@(GameState.ThemeColorString)-600 
+                                    text-@(GameState.ThemeColorString)-100 
+                                    hover:bg-@(GameState.ThemeColorString)-400" 
+                                    @onclick="@(e => OnAnswerHandlerAsync(zeroBasedChoiceIdx))">@IndexToLetterMap[i]</button>
+                                <span class="pl-1">@QuizItem.Question[i]</span>
+                            </li>
+                        }
                     }
+                </ol>
+            </div>
+        }
+        else
+        {
+            <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? State.TrinaryColorString : State.SecondaryColorString)-600 max-w-md flex items-center justify-center rounded-lg text-white">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                @if(QuizItem.AnswerIndex == UserAnswerIndex)
+                {
+                    <span>Correct!</span>
                 }
-            </ol>
-        </div>
-        
-        
+                else
+                {
+                    <span>Incorrect</span>
+                }
+            </button>
+            <div class="w-80 md:h-56 md:w-auto md:h-auto rounded-md flex justify-center items-center">
+                <img class="pt-4" src="@(QuizItem.AnswerIndex == UserAnswerIndex ? GetSuccessImage() : GetFailImage())" />
+            </div>
+        }
     </div>
 
     
@@ -46,30 +68,6 @@
         @if (!ShowAnswer)
         {
             <MainButton Text="Skip" OnClick="OnSkipHandlerAsync" Color="@(State.SecondaryColorString)"/>
-        }
-        else
-        {
-            <div class="-mt-4 flex flex-col items-center space-y-3">
-
-                <div class="w-48 h-32 md:w-80 md:h-56 md:-mt-10 rounded-md">
-                    <img src="@(QuizItem.AnswerIndex == UserAnswerIndex ? GetSuccessImage() : GetFailImage())" />
-                </div>
-                
-                <button class="p-3 bg-@(QuizItem.AnswerIndex == UserAnswerIndex ? State.TrinaryColorString : State.SecondaryColorString)-600 flex items-center justify-center rounded-lg text-white">
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    @if(QuizItem.AnswerIndex == UserAnswerIndex)
-                    {
-                        <span>Correct!</span>
-                    }
-                    else
-                    {
-                        <span>Incorrect</span>
-                    }
-                </button>
-            </div>
         }
     </div>
 

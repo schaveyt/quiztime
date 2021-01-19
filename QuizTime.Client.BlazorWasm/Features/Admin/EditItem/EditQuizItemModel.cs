@@ -9,19 +9,19 @@ namespace QuizTime.Client.BlazorWasm.Features.Admin.EditItem
         public QuestionTypeEnum QuestionType {get; set;}
 
         [Required]
-        [StringLength(50, ErrorMessage = "Too long.")]
+        [StringLength(150, ErrorMessage = "Must be less than 150 chars")]
         public string Question {get; set;}
 
-        [StringLength(25, ErrorMessage = "Too long.")]
+        [StringLength(50, ErrorMessage = "Must be less than 50 chars")]
         public string Choice0 {get; set;}
 
-        [StringLength(25, ErrorMessage = "Too long.")]
+        [StringLength(50, ErrorMessage = "Must be less than 50 chars")]
         public string Choice1 {get; set;}
 
-        [StringLength(25, ErrorMessage = "Too long.")]
+        [StringLength(50, ErrorMessage = "Must be less than 50 chars")]
         public string Choice2 {get; set;}
 
-        [StringLength(25, ErrorMessage = "Too long.")]
+        [StringLength(50, ErrorMessage = "Must be less than 50 chars")]
         public string Choice3 {get; set;}
 
         [Required]

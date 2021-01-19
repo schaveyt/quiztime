@@ -38,7 +38,7 @@ MultipleChoice,0,What is the coldest planet in the solar system?~Saturn~Neptune~
 Boolean,0,Magma is the molten rock after a volcanic eruption?~True~False,1
 Boolean,0,The irsis is the part of the human eye that controls the amount of light that passes through the pupil?~True~False,1
 MultipleChoice,0,Can you name the closest star to Earth?~Alpha Centari~The North Star~The sun~Taylor Swift,2
-Boolean,0,The Kite Brothers were the flying pioneers Orville and Wilbur?~True~False,0
+Boolean,0,The Kite Brothers were the flying pioneers Orville and Wilbur?~True~False,1
 MultipleChoice,0,Which of these is not one of the seven dwarves in Snow White?~Sleepy~Silly~Happy~Dopey,1
 MultipleChoice,0,In what country were the Olympic Games invented?~Athens~Greece~Rome~Italy,1
 MultipleChoice,0,Who was the 16th president of the United States?~James Buchanan~Abraham Lincoln~Andrew Jackson~Ullyses Grant,1
@@ -49,7 +49,7 @@ MultipleChoice,0,Who painted the Mona Lisa?~Leonardo DaVinci~Michaelangelo~Mario
 MultipleChoice,0,What are cartoon solve mysteries together and are rewarded with Scooby Snacks?~Captain Caveman~Power Rangers~Scooby Doo~The Smurfs,2
 Boolean,0,The Gigantic was the famous ocean liner sank on her first voyage in 1912?~True~False,1
 MultipleChoice,0,Which movie is Prince Charming from?~Snow White~Sleeping Beauty~Cinderella,2
-Boolean,0,Justin Bieber is grew up in Texas?~True~False,0
+Boolean,0,Justin Bieber is grew up in Texas?~True~False,1
 Boolean,0,Big Ben is the nickname for the bell of the clock at the Palace of Westminster in London?~True~False,0
 MultipleChoice,0,What do you get when you boil water?~Smoke~Steam~Ice Cubes,1
 MultipleChoice,0,What is the name of Mickey Mouse’s pet dog?~Pluto~Goofy~Bart,0

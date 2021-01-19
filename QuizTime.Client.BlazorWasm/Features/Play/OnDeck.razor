@@ -14,22 +14,29 @@
         <div class="text-4xl">You're next!</div>
     </div>
 
-    @if (State.QuestionSetIds != null)
+    @if (State.QuestionSetIds == null)
+    {
+        <div class="flex-auto flex flex-col justify-center items-center">
+            <SpinKitWave/>
+            <div class="-mt-8 text-lg text-gray-600">Fetching question set...</div>
+        </div>
+    }
+    else if ( (!timeRemaining.HasValue || timeRemaining.Value > 0) )
     {
         <div class="flex flex-col justify-center items-center space-y-4">
             <div class="text-2xl text-@(State.ThemeColorString)-500"><strong>@State.QuestionSetIds.Count</strong> questions left</div>
         </div>
+
+        <Countdown Duration=4 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
+            <div class="text-6xl">@timeRemaining</div>
+        </Countdown>
+        
     }
-
-    <Countdown Duration=4 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
-        <div class="text-6xl">@timeRemaining</div>
-    </Countdown>
-
-    @if (isLoading && timeRemaining == 0)
+    else if (isLoading)
     {
         <div class="flex-auto flex flex-col justify-center items-center">
             <SpinKitWave/>
-            <div class="-mt-8 text-lg text-gray-600">Still fetching next question...</div>
+            <div class="-mt-8 text-lg text-gray-600">Fetching next question...</div>
         </div>
     }
 
@@ -39,7 +46,7 @@
 
 @code
 {
-    protected uint timeRemaining {get;set;}
+    protected uint? timeRemaining {get;set;}
 
     [Inject]
     protected HttpClient Http { get; set; }
@@ -79,6 +86,10 @@
     protected void OnTimeRemainingChanged(uint newTimeRemaining)
     {
         timeRemaining = newTimeRemaining;
+        
+        Console.WriteLine($"timeRemaining: {timeRemaining}");
+        Console.WriteLine($"isLoading: {isLoading}");
+
         if (timeRemaining == 0 && !isLoading)
         {
             Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.Question });
