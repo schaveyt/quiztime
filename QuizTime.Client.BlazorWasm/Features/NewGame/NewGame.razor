@@ -90,9 +90,9 @@
         await Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Play });
     }
 
-    private void OnCloseHandler()
+    private async Task OnCloseHandler()
     {
-        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
+        await Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.Start });
     }
 
     private bool IsChecked(Player p)
@@ -100,15 +100,15 @@
         return GameState.PlayerExists(p);
     }
 
-    private void CheckboxCheckedHandler(Player player, bool isChecked)
+    private async Task CheckboxCheckedHandler(Player player, bool isChecked)
     {   
         if (isChecked)
         {
-            Mediator.Send(new GameState.AddPlayerAction { Value = player });
+            await Mediator.Send(new GameState.AddPlayerAction { Value = player });
         }
         else
         {
-            Mediator.Send(new GameState.DeletePlayerAction { Value = player });
+            await Mediator.Send(new GameState.DeletePlayerAction { Value = player });
         }
     }
 
@@ -137,6 +137,8 @@
         {
             var modifiedPlayer = modalResults.Data as Player;
             player.Name = modifiedPlayer.Name;
+            await Mediator.Send(new GameState.UpdatePlayerAction { Value = modifiedPlayer });
         }
+
     }
 }    

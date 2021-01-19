@@ -106,7 +106,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
         {
             for (var i = 0; i < Players.Count; i++)
             {
-                if (Players[i].Name == p.Name)
+                if (Players[i].Id == p.Id)
                 {
                     return i;
                 }
@@ -131,6 +131,21 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
         public void PlayerAdd (Player p)
         {
             Players.Add(p);
+        }
+
+        public void PlayerUpdate (Player p)
+        {
+            var idx = PlayerIndex(p);
+            if (idx == -1)
+            {
+                return;
+            }
+
+            var player = Players[idx];
+            player.Name = p.Name;
+            player.Color = p.Color;
+            player.MinLevel = p.MinLevel;
+            player.MaxLevel = p.MaxLevel;
         }
 
         private void DetermineNextPlayer()

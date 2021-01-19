@@ -69,7 +69,6 @@
             await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = itemIds });
         }
  
-        Console.WriteLine($"QuestionSetId.Count: {State.QuestionSetIds.Count}");
         var randomId = new Random().Next(0, State.QuestionSetIds.Count);
         var nextQuestion = await DataService.GetQuizItemById(Http, State.QuestionSetIds[randomId]);
 
@@ -86,9 +85,6 @@
     protected void OnTimeRemainingChanged(uint newTimeRemaining)
     {
         timeRemaining = newTimeRemaining;
-        
-        Console.WriteLine($"timeRemaining: {timeRemaining}");
-        Console.WriteLine($"isLoading: {isLoading}");
 
         if (timeRemaining == 0 && !isLoading)
         {

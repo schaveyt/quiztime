@@ -11,6 +11,9 @@ namespace QuizTime.Shared.Data
         }
 
         [Required]
+        public int Id {get; set;}
+
+        [Required]
         [StringLength(25, ErrorMessage = "Name is too long.")]
         public string Name {get; set;}
 

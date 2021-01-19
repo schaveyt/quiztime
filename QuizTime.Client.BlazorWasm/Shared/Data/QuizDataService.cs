@@ -12,11 +12,11 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
     {
         private readonly SortedList<string, Player> _players = new SortedList<string, Player>
         {
-            { "Mia", new Player (){ Name = "Mia", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
-            { "Izzy", new Player (){ Name = "Izzy", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Pink } },
-            { "Jack", new Player (){ Name = "Jack", MinLevel = 5, MaxLevel = 8, Color = ThemeColor.Blue } },
-            { "Mom", new Player (){ Name = "Mom", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Yellow } },
-            { "Dad", new Player (){ Name = "Dad", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Purple } },
+            { "Mia", new Player (){ Id = 1, Name = "Mia", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Blue } },
+            { "Izzy", new Player (){ Id = 2, Name = "Izzy", MinLevel = 0, MaxLevel = 2, Color = ThemeColor.Pink } },
+            { "Jack", new Player (){ Id = 3, Name = "Jack", MinLevel = 5, MaxLevel = 8, Color = ThemeColor.Blue } },
+            { "Mom", new Player (){ Id = 4, Name = "Mom", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Yellow } },
+            { "Dad", new Player (){ Id = 5, Name = "Dad", MinLevel = 11, MaxLevel = 16, Color = ThemeColor.Purple } },
         };
 
         public IEnumerable<Player> GetPlayers()
