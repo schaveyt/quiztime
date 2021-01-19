@@ -1,6 +1,17 @@
 @page "/new"
+@using BlazorState
+@using QuizTime.Client.BlazorWasm.Features.Game 
 @using QuizTime.Client.BlazorWasm.Shared.UI
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
 <MainContainer>
     <NewGame/>
 </MainContainer>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });
+    }
+}

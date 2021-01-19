@@ -17,8 +17,6 @@
 
 @code
 {
-    private GameState GameState => GetState<GameState>();
-
     private void OnClickNewGame()
     {
         Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });

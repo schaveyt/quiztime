@@ -6,51 +6,36 @@
 
 @inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
 
-<Header Title="Question" ShowCloseButton="true" OnClose="OnClickClose"/>
+<Header Title="Question" ShowSettingsButtton="true" ShowCloseButton="true" OnClose="OnClickClose"/>
 <ContentArea CustomClass="flex flex-row justify-center">
 
 <div class="flex flex-col pt-3 pb-5 space-y-3">
-    <div class="flex-auto text-3xl md:text-4xl px-6 flex flex-col space-y-10">
-        <div class="pt-8 flex flex-row justify-center item-center">
-            <h2 class="text-5xl md:text-6xl">@Player.Name</h2>
+    <div class="flex-auto text-xl md:text-2xl px-6 md:px-48 flex flex-col space-y-4">
+        <div class="flex flex-row justify-center item-center">
+            <h2 class="text-4xl md:text-5xl">@Player.Name</h2>
         </div>
         <div>
-        @switch (QuizItem.QuestionType)
-        {
-            case QuestionTypeEnum.MultipleChoice:
-                <p>@QuizItem.Question[0]</p>
-                <ol class="pt-8">
-                    @if (QuizItem.Question.Length > 1)
+            <strong class="text-2xl md:text-3xl">@QuizItem.Question[0]</strong>
+            <ol class="pt-3 md:px-16">
+                @for (var i = 1; i < 5; i++)
+                {
+                    var zeroBasedChoiceIdx = i - 1;
+                    @if (i < QuizItem.Question.Length)
                     {
-                        <li class="@(ChoiceOptionStyle(0))">a) @QuizItem.Question[1]</li>
+                        <li class="@(ChoiceOptionStyle(zeroBasedChoiceIdx)) py-3">
+                            <button 
+                                class="w-14 h-10 pb-1
+                                rounded shadow
+                                text-md text-center
+                                bg-@(GameState.ThemeColorString)-600 
+                                text-@(GameState.ThemeColorString)-100 
+                                hover:bg-@(GameState.ThemeColorString)-400" 
+                                @onclick="@(e => OnAnswerHandlerAsync(zeroBasedChoiceIdx))">@IndexToLetterMap[i]</button>
+                            <span class="pl-1">@QuizItem.Question[i]</span>
+                        </li>
                     }
-                    @if (QuizItem.Question.Length > 2)
-                    {
-                        <li class="@(ChoiceOptionStyle(1))">b) @QuizItem.Question[2]</li>
-                    }
-                    @if (QuizItem.Question.Length > 3)
-                    {
-                        <li class="@(ChoiceOptionStyle(2))">c) @QuizItem.Question[3]</li>
-                    }
-                    @if (QuizItem.Question.Length > 4)
-                    {
-                        <li class="@(ChoiceOptionStyle(3))">d) @QuizItem.Question[4]</li>
-                    }
-                </ol>
-                break;
-
-            case QuestionTypeEnum.Boolean:
-                <strong>True or False?</strong>
-                <p class="pt-3">@QuizItem.Question[0]</p>
-                break;
-
-            case QuestionTypeEnum.Verbal:
-                <p>@QuizItem.Question[0]</p>
-                break;
-            
-            default:
-                break;
-        }
+                }
+            </ol>
         </div>
         
         
@@ -61,40 +46,6 @@
         @if (!ShowAnswer)
         {
             <MainButton Text="Skip" OnClick="OnSkipHandlerAsync" Color="@(State.SecondaryColorString)"/>
-
-            @switch (QuizItem.QuestionType)
-            {
-                case QuestionTypeEnum.MultipleChoice:
-                    @if (QuizItem.Question.Length > 1)
-                    {
-                        <MainButton Text="a" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
-                    }
-                    @if (QuizItem.Question.Length > 2)
-                    {
-                        <MainButton Text="b" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
-                    }
-                    @if (QuizItem.Question.Length > 3)
-                    {
-                        <MainButton Text="c" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(2))"/>
-                    }
-                    @if (QuizItem.Question.Length > 4)
-                    {
-                        <MainButton Text="d" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(3))"/>
-                    }
-                    
-                    break;
-                    
-                case QuestionTypeEnum.Boolean:
-                    <MainButton Text="True" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
-                    <MainButton Text="False" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(1))"/>
-                    break;
-                case QuestionTypeEnum.Verbal:
-                    <MainButton Text="Do you have your answer?" Color="@(State.ThemeColorString)" OnClick="@(e => OnAnswerHandlerAsync(0))"/>
-                    break;
-                
-                default:
-                    break;
-            }
         }
         else
         {
@@ -136,10 +87,19 @@
     private Player Player => GameState.CurrentPlayer;
 
     private bool ShowAnswer {get; set;}
+
     private int UserAnswerIndex {get; set;}
 
     private List<string> SuccessImages {get; set;}
 
+    private IDictionary<int, string> IndexToLetterMap {get; set;} = 
+        new SortedList<int, string>(){
+            {1, "a"},
+            {2, "b"},
+            {3, "c"},
+            {4, "d"},
+        };
+    
     [Inject]
     protected QuizDataService DataService {get; set;}
 
@@ -163,7 +123,17 @@
         UserAnswerIndex = answerIndex;
         ShowAnswer = true;
         StateHasChanged();
-        await Task.Delay(4000);
+        await Task.Delay(5000);
+       
+
+        // if the answer was correctly, remove it from the question set.
+        //
+        if (QuizItem.AnswerIndex == UserAnswerIndex)
+        {
+            var reducedQuestionSetIds = State.QuestionSetIds.Where(id => id != QuizItem.Id).ToList();
+            await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = reducedQuestionSetIds });
+        }
+
         ShowAnswer = false;
         UserAnswerIndex = -1;
         await Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.OnDeck });

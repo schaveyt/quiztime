@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -25,6 +26,13 @@ namespace QuizTime.Api.Rest
         {
             var db = new QuizTimeDbContext();
             return await db.QuizItems.ToListAsync();
+        }
+
+        [HttpGet("/api/itemids")]
+        public async Task<ActionResult<List<int>>> GetQuizItemIds()
+        {
+            var db = new QuizTimeDbContext();
+            return await db.QuizItems.Select(q => q.Id).ToListAsync();
         }
 
         [HttpGet("/api/items/{id}")]
