@@ -24,6 +24,14 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             return _players.Values;
         }
 
+        private readonly List<string> _finishingImages = new List<string>()
+        {
+            //"https://media.giphy.com/media/LpQrsRA3zOuJNk7KYt/giphy.gif", // some good news
+            "https://media.giphy.com/media/cbb8zL5wbNnfq/giphy.gif" // multi thumbs up
+        };
+
+        public List<string> FinishingImages => _finishingImages;
+
         private readonly List<string> _successImages = new List<string>()
         {
             "https://media.giphy.com/media/BSx6mzbW1ew7K/giphy.gif", // nyan cat animated
@@ -32,12 +40,15 @@ namespace QuizTime.Client.BlazorWasm.Shared.Data
             "https://media.giphy.com/media/bTzFnjHPuVvva/giphy.gif", // carlton
             "https://media.giphy.com/media/j3gsT2RsH9K0w/giphy.gif", // nepoleaon dynamite dance
             "https://media.giphy.com/media/SKGo6OYe24EBG/giphy.gif", // spongebob rainbow
+            "https://media.giphy.com/media/3o751YVqovWIxqJC5q/giphy.gif", //thumb up chewing guy
             "https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif", // the office fist pump
             "https://media.giphy.com/media/111ebonMs90YLu/giphy.gif", // kid thumbs up
             "https://media.giphy.com/media/Swx36wwSsU49HAnIhC/giphy.gif", // dumbledore applause
             "https://media.giphy.com/media/26gN16cJ6gy4LzZSw/giphy.gif", // harry potter applause
             "https://media.giphy.com/media/3otPoS81loriI9sO8o/giphy.gif", // elf you did it
+            "https://media.giphy.com/media/9DMlt1KUBQnJe/giphy.gif", // snl news desk
             "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif", // spungebob thumbs up
+            "https://media.giphy.com/media/OcZp0maz6ALok/giphy.gif", // 30 rock
             "https://media.giphy.com/media/oobNzX5ICcRZC/giphy.gif", //minion thumbs up
             "https://media.giphy.com/media/1gqDQUaLe3mCc/giphy.gif", // awesome
             "https://media.giphy.com/media/3o7abGQa0aRJUurpII/giphy.gif", // spongebob many thumbup

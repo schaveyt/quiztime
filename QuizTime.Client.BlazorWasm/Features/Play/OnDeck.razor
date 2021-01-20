@@ -24,7 +24,8 @@
     else if ( (!timeRemaining.HasValue || timeRemaining.Value > 0) )
     {
         <div class="flex flex-col justify-center items-center space-y-4">
-            <div class="text-2xl text-@(State.ThemeColorString)-500"><strong>@State.QuestionSetIds.Count</strong> questions left</div>
+            <div class="text-2xl text-@(State.ThemeColorString)-500"><strong>@State.QuestionSetIds.Count</strong>
+            @(State.QuestionSetIds.Count == 1 ? "question" : "questions") left</div>
         </div>
 
         <Countdown Duration=4 OnTimeRemainingChanged="@(time => OnTimeRemainingChanged(time))">
@@ -66,7 +67,17 @@
         {
             var itemIds = await DataService.GetQuizItemsIds(
                 Http, State.CurrentPlayer.MinLevel, State.CurrentPlayer.MaxLevel);
-            await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = itemIds });
+            var deckSize = State.Players.Count * 5;
+            var questionSetIds = new HashSet<int>();
+
+            // pick 'deskSize' random questions'
+            while (questionSetIds.Count < deckSize)
+            {
+                var id = new Random().Next(0, itemIds.Count);
+                questionSetIds.Add(id);
+            }
+            
+            await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = questionSetIds.ToList() });
         }
  
         var randomId = new Random().Next(0, State.QuestionSetIds.Count);

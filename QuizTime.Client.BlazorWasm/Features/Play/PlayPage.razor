@@ -26,5 +26,10 @@
         {
             Value = GameMode.Play
         });
+
+        Mediator.Send(new GameState.UpdatePlayModeAction
+        {
+            Value = PlayMode.GameOver
+        });
     }
 }

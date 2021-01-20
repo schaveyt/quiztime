@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuizTime.Shared.Data;
 using System.Text;
 using System;
+using System.Linq;
 
 namespace QuizTime.Client.BlazorWasm.Features.Game
 {
@@ -20,8 +21,7 @@ namespace QuizTime.Client.BlazorWasm.Features.Game
         None,
         OnDeck,
         Question,
-        Answer,
-        Reaction,
+        GameOver,
         Scoreboard
     }
 

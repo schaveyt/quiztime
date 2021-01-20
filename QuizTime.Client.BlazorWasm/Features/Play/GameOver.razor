@@ -1,0 +1,56 @@
+@using BlazorState
+
+@using QuizTime.Client.BlazorWasm.Features.Game 
+@using QuizTime.Client.BlazorWasm.Shared.Data
+@using QuizTime.Client.BlazorWasm.Shared.UI.Composite
+@using QuizTime.Client.BlazorWasm.Shared.UI.Element
+@using QuizTime.Shared.Data
+@inherits QuizTime.Client.BlazorWasm.Shared.UI.StateComponentBase
+
+<Header Title="Game Over" ShowCloseButton="false" />
+<ContentArea CustomClass="flex flex-col justify-between items-center space-y-8">
+    <div class="pt-4">
+        <div class="flex flex-col justify-center items-center space-y-4">
+            <div class="text-6xl text-@(State.ThemeColorString)-500">You Did It!</div>
+        </div>
+
+        <div class="pt-4 flex justify-center items-center">
+            <img class="w-80 h-auto" src="@GetFinishingImage()" />
+        </div>
+    </div>
+
+    <!-- Show a scoreboard here -->
+
+    <div class="p-4 mb-2 max-w-xs mx-auto flex flex-row justify-center items-center">
+        <MainButton Text="New Game" OnClick="@NewGameHandler" />
+    </div>
+
+</ContentArea> 
+
+<Footer />
+
+@code
+{
+    protected uint? timeRemaining {get;set;}
+
+    [Inject]
+    protected HttpClient Http { get; set; }
+
+    [Inject]
+    protected QuizDataService DataService { get; set; }
+
+    private bool isLoading;
+
+    protected async Task NewGameHandler()
+    {
+        await Mediator.Send(new GameState.UpdateQuizQuestionSetAction { Value = null });
+        await Mediator.Send(new GameState.UpdatePlayModeAction { Value = PlayMode.None });
+        await Mediator.Send(new GameState.UpdateGameModeAction { Value = GameMode.NewGame });
+    }
+
+    private string GetFinishingImage()
+    {
+        var randomId = new Random().Next(0, DataService.FinishingImages.Count);
+        return DataService.FinishingImages[randomId];
+    }
+} 
